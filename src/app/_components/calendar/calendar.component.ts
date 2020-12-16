@@ -190,8 +190,8 @@ export class CalendarComponent implements OnInit {
             color: element.isDemo ? colors.blue : colors.yellow,
             actions: this.actions,
             meta: element,
-            startTime: element.startTime,
-            endTime: element.endTime,
+            // startTime: element.startTime,
+            // endTime: element.endTime,
           },
         );
       });
