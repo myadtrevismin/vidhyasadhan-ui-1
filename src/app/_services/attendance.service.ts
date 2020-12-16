@@ -13,7 +13,7 @@ export class AttendanceService {
   getattendances(courseid){
     const options = courseid ?
     { params: new HttpParams().set('id', courseid)} : {};
-    return this.http.get<any[]>(environment.apiUrl + `/attendance/getbycourseid`, options);
+    return this.http.get<any[]>(environment.apiUrl + `/attendance/bycourse`, options);
   }
 
   getattendanceByTutor(courseid){
@@ -24,5 +24,11 @@ export class AttendanceService {
 
   saveattendance(attendances: Attendance[]){
     return this.http.post(environment.apiUrl + `/attendance`, attendances);
+  }
+
+  updateAttendance(attendance){
+    return this.http.put(environment.apiUrl + `/attendance`, attendance, {
+      withCredentials: true
+    });
   }
 }

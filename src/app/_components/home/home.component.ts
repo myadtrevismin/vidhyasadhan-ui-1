@@ -16,8 +16,7 @@ export class HomeComponent implements OnInit {
   users: User[];
   user: User;
 
-  constructor(private userService: UserService, private authService: AuthserviceService,
-              public notificationMiddleware: NotificationMiddlewareService) {
+  constructor(private userService: UserService, private authService: AuthserviceService) {
     this.authService.user.subscribe(x => this.user = x);
   }
 

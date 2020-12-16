@@ -1,7 +1,7 @@
 <app-navigation-bar *ngIf="isAuthenticated()" (toggleSidenav)="sidenav.toggle()">
 </app-navigation-bar>
 <mat-sidenav-container class="example-container mat-typography"  autosize>
-  <mat-sidenav  #sidenav class="main-container" mode="side" [ngClass]="{'mat-side-pink' : authService.userValue?.role === 0}">
+  <mat-sidenav  #sidenav class="main-container" mode="side" [ngClass]="{'mat-side-pink' : authService.userValue?.role === 'Student'}">
     <!-- <img class="img img-responsive sidenav-img" src="assets/sidenav-1.png"
         srcset="assets/sidenav-2.png 2x, disableClose="true"
         assets/sidenav-3.png 3x" > -->
@@ -14,7 +14,7 @@
       </mat-toolbar-row>
     </mat-toolbar> -->
     <mat-nav-list>
-      <ng-container [ngSwitch]="authService.userValue?.role === 0">
+      <ng-container [ngSwitch]="authService.userValue?.role === 'Student'">
       <ng-container *ngSwitchCase="true">
         <a  mat-list-item class="pink"
         (click)="sidenav.close()" [routerLink]="['/vs/classroom']"
@@ -99,7 +99,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content class="example-sidenav-content" [ngClass]="authService.userValue?.role === 0 ? 'sidenav-bg-pink':'sidenav-bg-blue'">
+  <mat-sidenav-content class="example-sidenav-content" [ngClass]="authService.userValue?.role === 'Student' ? 'sidenav-bg-pink':'sidenav-bg-blue'">
     <div>
       <img class="oval-copy-left-1" src="assets/registration/oval-copy-2.svg">
       <img class="oval-copy-left-2" src="assets/registration/oval-copy-3.svg">

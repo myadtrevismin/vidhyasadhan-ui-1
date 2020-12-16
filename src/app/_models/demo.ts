@@ -11,9 +11,10 @@ export interface Demo{
     endTime: string;
     credits: number;
     departmentID: number;
-    courseAssignments: CourseAssignment[];
+    selectedDays?: string;
+    courseAssignments?: CourseAssignment[];
     enrollments: Enrollment[];
-    calendarEvent: Calendar;
+    calendarEvent?: Calendar;
     locationId: string;
     locationName: string;
     langitude: string;
@@ -23,6 +24,8 @@ export interface Demo{
     subject?: string;
     isOnline: boolean;
     status?: number;
+    ownerId?: number;
+    eventType?: number;
 }
 
 export interface CourseAssignment{
@@ -32,10 +35,14 @@ export interface CourseAssignment{
 }
 
 export interface Enrollment{
-    enrollmentID?: number;
-    courseID: number;
+    id?: number;
+    eventId: number;
     studentID: string;
-    student?: User;
+    account?: User;
     status?: number;
+    enrollmentDate?: Date;
+    updateDate?: Date;
+    event?: any;
+    requestId?: number;
 }
 

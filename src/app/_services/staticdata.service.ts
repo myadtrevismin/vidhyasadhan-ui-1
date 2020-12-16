@@ -38,16 +38,16 @@ export class StaticdataService {
 
   getNotifications(userId){
     const options = { params: new HttpParams().set('userId', userId) };
-    return this.http.get<any>(`${environment.apiUrl}/notifications/load`, options);
+    return this.http.get<any>(`${environment.apiUrl}/static/appnotifications`, options);
   }
 
   getStaticDataSets(){
-    return this.http.get<StaticData>(`${environment.apiUrl}/resourses/StaticDataForSubjects`);
+    return this.http.get<StaticData>(`${environment.apiUrl}/static/data`);
   }
 
   getStatistics(userId){
-    const options = { params: new HttpParams().set('userId', userId) };
-    return this.http.get<Statistics>(`${environment.apiUrl}/resourses/statistics`, options);
+    const options = { params: new HttpParams().set('userId',  userId) };
+    return this.http.get<Statistics>(`${environment.apiUrl}/static/statistics`, options);
   }
 
 

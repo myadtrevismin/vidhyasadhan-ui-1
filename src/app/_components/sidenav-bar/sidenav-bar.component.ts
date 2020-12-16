@@ -21,7 +21,6 @@ export class SidenavBarComponent implements OnInit {
   constructor(public authService: AuthserviceService, private route: ActivatedRoute, private router: Router) {
     this.authService.user.subscribe(x => this.user = x);
     this.authService.loginuser.subscribe(x => {this.loginType = x; console.log(this.loginType); } );
-    this.loginType = localStorage.getItem('logtype');
    }
 
   studentnavs = [

@@ -30,9 +30,9 @@ export class StudymaterialComponent implements OnInit {
   ngOnInit(): void {
     this.courseService.getAllCoursesByUser(this.authService.userValue.id)
     .subscribe(x => this.courses = x, (error) => this.error = error);
-    this.courseService.getStudentAssignments(this.authService.userValue.id)
-    .subscribe(x => {this.assignments = x; console.log(this.assignments); },
-      (error) => this.error = error);
+    // this.courseService.getStudentAssignments(this.authService.userValue.id)
+    // .subscribe(x => {this.assignments = x; console.log(this.assignments); },
+    //   (error) => this.error = error);
     this.selectedAction = this.actions[0];
   }
 

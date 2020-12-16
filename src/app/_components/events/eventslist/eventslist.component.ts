@@ -10,7 +10,7 @@ import * as moment from 'moment';
 })
 export class EventslistComponent implements OnInit {
 
-  constructor(private authService: AuthserviceService,
+  constructor(public authService: AuthserviceService,
               private demoService: DemoService, ) { }
 
   @Input() tutions;
@@ -30,12 +30,12 @@ export class EventslistComponent implements OnInit {
   filterEvents(){
     this.splitTutions =  this.tutions;
     this.splitDemos = this.demos;
-    this.splitDemos = this.demos.filter(x => (new Date(x.startDate).getMonth() <= this.month.getMonth() &&
-    new Date(x.startDate).getFullYear() === this.month.getFullYear()) &&
-    (new Date(x.endDate).getMonth() >= this.month.getMonth() && new Date(x.endDate).getFullYear() === this.month.getFullYear()));
-    this.splitTutions = this.tutions?.filter(x => (new Date(x.startDate).getMonth() <= this.month.getMonth() &&
-    new Date(x.startDate).getFullYear() === this.month.getFullYear()) &&
-    (new Date(x.endDate).getMonth() >= this.month.getMonth() && new Date(x.endDate).getFullYear() === this.month.getFullYear()));
+    this.splitDemos = this.demos.filter(x => ((new Date(x.startDate).getMonth() === this.month.getMonth())
+     && (new Date(x.startDate).getFullYear() === this.month.getFullYear())) || ((new Date(x.endDate).getMonth() === this.month.getMonth())
+     && (new Date(x.endDate).getFullYear() === this.month.getFullYear())));
+    this.splitTutions = this.tutions.filter(x => ((new Date(x.startDate).getMonth() === this.month.getMonth())
+    && (new Date(x.startDate).getFullYear() === this.month.getFullYear())) || ((new Date(x.endDate).getMonth() === this.month.getMonth())
+    && (new Date(x.endDate).getFullYear() === this.month.getFullYear())));
   }
 
   nextClick(side){

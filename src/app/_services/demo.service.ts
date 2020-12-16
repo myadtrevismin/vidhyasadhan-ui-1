@@ -17,30 +17,38 @@ export class DemoService {
   }
 
   getDemoById(id){
-    const options = id ?
-    { params: new HttpParams().set('id', id)} : {};
-    console.log(id);
-    return this.http.get<any>(`${environment.apiUrl}/demos/GetById`, options);
+    return this.http.get<any>(`${environment.apiUrl}/vevent`, {
+      withCredentials: true,
+      params: new HttpParams().set('id', id)
+    });
   }
 
   getAllDemosByUser(userid){
     const options = userid ?
-    { params: new HttpParams().set('userId', userid)} : {};
-    return this.http.get<Demo[]>(`${environment.apiUrl}/demos/GetByUserId`, options);
+    { params: new HttpParams().set('id', userid)} : {};
+    return this.http.get<Demo[]>(`${environment.apiUrl}/vevent/byuser`, options);
   }
 
   getAllDemosByloggedUser(){
   }
 
   createDemo(demo){
-    return this.http.post<any>(`${environment.apiUrl}/demos/create`, demo);
+    return this.http.post<any>(`${environment.apiUrl}/vevent`, demo);
   }
 
   requestDemo(demo){
-    return this.http.post<any>(`${environment.apiUrl}/demos/request`, demo);
+    return this.http.post<any>(`${environment.apiUrl}/request`, demo, {
+      withCredentials: true
+    });
   }
 
-  getDemoRequests(demo){
-    return this.http.post<DemoRequest[]>(`${environment.apiUrl}/demos/requests`, demo);
+  getDemoRequests(userId){
+    const options = userId ?
+    { params: new HttpParams().set('id', userId)} : {};
+
+    return this.http.get<DemoRequest[]>(`${environment.apiUrl}/request/byuser`, {
+      withCredentials: true,
+      params: options.params
+    });
   }
 }

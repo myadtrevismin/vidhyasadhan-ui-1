@@ -242,18 +242,18 @@ body { margin: 0 !important; font-family:'Montserrat, sans-serif' !important;}
 
 
  .login-side{
-  background-image: url("/vidhyasadhan-ui/assets/registration/register-1.png");
+  background-image: url("/assets/registration/register-1.png");
   background-image:
     -webkit-image-set(
-      url("/vidhyasadhan-ui/assets/registration/register-1.png") 1x,
-      url("/vidhyasadhan-ui/assets/registration/register-2.png") 2x,
-      url("/vidhyasadhan-ui/assets/registration/register-3.png") 3x,
+      url("/assets/registration/register-1.png") 1x,
+      url("/assets/registration/register-2.png") 2x,
+      url("/assets/registration/register-3.png") 3x,
     );
   background-image:
     image-set(
-      url("/vidhyasadhan-ui/assets/registration/register-1.png") 1x,
-      url("/vidhyasadhan-ui/assets/registration/register-2.png") 2x,
-      url("/vidhyasadhan-ui/vidhyasadhan-ui/vidhyasadhan-ui/assets/registration/register-3.png") 3x,
+      url("/assets/registration/register-1.png") 1x,
+      url("/assets/registration/register-2.png") 2x,
+      url("/assets/registration/register-3.png") 3x,
     );
     /* min-height: 400px; */
     /* display: inline-block; */
@@ -399,4 +399,9 @@ body { margin: 0 !important; font-family:'Montserrat, sans-serif' !important;}
   opacity: 0.9;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
   background-color: #ffffff;
+}
+
+
+.min-card{
+  min-height: 85vh;
 }

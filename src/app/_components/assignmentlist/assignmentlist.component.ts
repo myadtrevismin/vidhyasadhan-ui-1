@@ -94,8 +94,9 @@ export class AssignmentlistComponent implements OnInit, AfterViewInit {
         this.selection.selected.forEach(x => {
           saveassignments.push({
             assignmentId: x.assignmentId,
-            userId: student.id,
-            courseId: this.selectedCourse.courseId
+            studentId: student.id,
+            courseId: this.selectedCourse.courseId,
+            creationDate: new Date(),
           });
         });
       });

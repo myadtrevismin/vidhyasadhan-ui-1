@@ -9,6 +9,8 @@ import { AuthserviceService } from 'src/app/_services/authservice.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
+import { AttendancemodalComponent } from '../attendancemodal/attendancemodal.component';
 
 @Component({
   selector: 'app-attendance',
@@ -28,15 +30,17 @@ export class AttendanceComponent implements OnInit {
   selectedCourse;
   isLoading;
   courses;
+  filteredCourses;
 
   public attendanceForm: FormGroup;
-  displayedColumns: string[] = ['name', 'address', 'attendanceDate', 'isPresent', 'reason'];
+  displayedColumns: string[] = ['name', 'address', 'attendanceDate', 'isPresent', 'reason', 'edit'];
 
   constructor(private attendance: AttendanceService,
               private formBuilder: FormBuilder,
               private courseService: CourseService,
               private demoService: DemoService,
-              private authService: AuthserviceService) { }
+              private authService: AuthserviceService,
+              public dialog: MatDialog) { }
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -52,17 +56,21 @@ export class AttendanceComponent implements OnInit {
       remarks: ['', Validators.required],
   });
 
-    this.demoService.getAllDemosByUser(this.authService.userValue.id).subscribe(x => {
-    this.courses = x;
-    if (x.length > 0){
-      this.getattendance(x[0]);
-      if (this.dataSource !== undefined){
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
-    }
-  } );
+    this.loadDemos();
+  }
 
+  private loadDemos() {
+    this.demoService.getAllDemosByUser(this.authService.userValue.id).subscribe(x => {
+      this.courses = x;
+      this.filteredCourses = x;
+      if (x.length > 0) {
+        this.getattendance(x[0]);
+        if (this.dataSource !== undefined) {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+      }
+    });
   }
 
   displaycourse(course){
@@ -79,6 +87,32 @@ export class AttendanceComponent implements OnInit {
 
     if (this.dataSource?.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  updateAttendance(attendance){
+    const dialogRef = this.dialog.open(AttendancemodalComponent, {
+      width: '450px',
+      data: attendance,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== null || result !== undefined){
+        this.attendance.updateAttendance(result).subscribe(
+          x => {
+            this.loadDemos();
+          }
+        );
+      }
+    });
+  }
+
+  filterCourse(isOnline){
+    this.filteredCourses = this.courses.filter(x => x.eventType === isOnline);
+    if (this.filteredCourses.length > 0){
+      this.getattendance(this.filteredCourses[0]);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 

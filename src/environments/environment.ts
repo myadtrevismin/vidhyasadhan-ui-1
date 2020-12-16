@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: `https://localhost:5001/api`,
+  apiUrl: `https://localhost:44385/api`,
   applicationServerPublicKey: `BK1AabF3PRWyqtFwz8-8NvCdG35Ze5GbRW6YdN1cqSsws2H3nIYNGiYnmTD45XRcul556ZUk2p8oURhVlaC4tWI`,
   mapbox_accessToken: `pk.eyJ1IjoiYWRtaW4yMTkiLCJhIjoiY2tkbjV1bGFoMDdyNjJ1cWp6OW9vYTc2cCJ9.f3iM4kZihwi3_7gKEEsZ8g`,
   mapbox_api: `https://api.mapbox.com/geocoding/v5/`,

@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill,
   ApexLegend, ApexNonAxisChartSeries, ApexPlotOptions, ApexResponsive, ApexStroke, ApexTooltip, ApexXAxis, ApexYAxis, ChartComponent } from 'ng-apexcharts';
+import { AdminService } from 'src/app/_services/admin.service';
 
 export type ChartOptionsBar = {
   series: ApexAxisChartSeries;
@@ -34,6 +35,8 @@ export class AdminComponent {
   public barChart: Partial<ChartOptionsBar>;
   public tutorPie: Partial<ChartOptionsTutors>;
   public eventPie: Partial<ChartOptionsTutors>;
+  adminData;
+  tutorrequests = [];
 
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -58,10 +61,8 @@ export class AdminComponent {
     })
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.createBarChart();
-    this.createTutorPie();
-    this.createEventsPie();
+  constructor(private breakpointObserver: BreakpointObserver, private adminService: AdminService) {
+    this.mapAdminData();
   }
 
   createBarChart(){
@@ -124,7 +125,7 @@ export class AdminComponent {
 
   createTutorPie(){
     this.tutorPie = {
-      series: [20, 80, 40],
+      series: [this.adminData.tutors.length, this.adminData.students.length, this.adminData.parents.length],
       chart: {
         width: 380,
         type: 'pie'
@@ -147,8 +148,10 @@ export class AdminComponent {
   }
 
   createEventsPie(){
+    const classes = this.adminData.classesOrDemos?.filter(x => !x.isDemo);
+    const demos = this.adminData.classesOrDemos?.filter(x => x.isDemo);
     this.eventPie = {
-      series: [50, 20],
+      series: [classes.length, demos.length],
       chart: {
         width: 380,
         type: 'pie'
@@ -168,5 +171,25 @@ export class AdminComponent {
         }
       ]
     };
+  }
+
+  mapAdminData(){
+    this.adminService.getadminData().subscribe(
+      x => {
+      this.adminData = x;
+      this.tutorrequests = x.tutors.filter(a => a.tutorStatus === 0);
+      this.createBarChart();
+      this.createTutorPie();
+      this.createEventsPie();
+      }
+    );
+  }
+
+  takeAction(tutor, status){
+    this.adminService.updateTutor({userId: tutor.id, status}).subscribe(
+      x => {
+        this.mapAdminData();
+      }
+    );
   }
 }

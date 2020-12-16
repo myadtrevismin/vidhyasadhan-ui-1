@@ -44,35 +44,35 @@ export class DashboardComponent implements OnInit {
       }
     },
     nav: true
-  }
+  };
 
   tutorcards: Dashboard[] = [
     {id: 0, icon: 'assets/dashboard/noun-teaching-2380320.svg', text: 'My Classroom', subtext : 'Events',
-                                                          value : '0', type: '', class: 'opac-5', path: '/classroom'},
+                                                          value : '0', type: '', class: 'opac-5', path: '/vs/classroom'},
     {id: 1, icon: 'assets/dashboard/noun-assignment-3202074.svg', text: 'Requests',
-    subtext : 'Pending tasks', value : '0', type: '', class: 'opac-5', path: '/requests' },
+    subtext : 'Pending tasks', value : '0', type: '', class: 'opac-5', path: '/vs/requests' },
     {id: 2, icon: 'assets/dashboard/path.svg', text: 'My Profile', subtext : 'Completed',
     value : '0%', type: '', class: 'opac-5',
-    path: '/profile' },
+    path: '/vs/profile' },
     {id: 3, icon: 'assets/dashboard/vector.svg', text: 'My Events', subtext : 'Completed',
-    value : '0', type: '', class: 'opac-5', path: '/events' },
+    value : '0', type: '', class: 'opac-5', path: '/vs/events' },
     {id: 4, icon: 'assets/dashboard/my-earnings.svg', text: 'My Earnings',
-    subtext : 'Completed', value : '0', type: '', class: 'opac-5', path: '/earnings' },
+    subtext : 'Completed', value : '0', type: '', class: 'opac-5', path: '/vs/earnings' },
     {id: 5, icon: 'assets/dashboard/my-referrals.svg', text: 'My Referrals',
-    subtext : 'Rewards', value : '0', type: '', class: 'opac-5', path: '/tutor-referrals' }
+    subtext : 'Rewards', value : '0', type: '', class: 'opac-5', path: '/vs/tutor-referrals' }
   ];
 
   studentcards: Dashboard[] = [
     {id: 0, icon: 'assets/Student/noun-teaching-2380320.svg', text: 'My Classroom',
     subtext : 'Events', value : '0',
-                                                        type: '', class: 'opac-5', path: '/classroom' },
-    {id: 1, icon: 'assets/Student/noun-assignment-3202074.svg', text: 'Book Tutor', subtext : 'Pending tasks', value : '8', type: '', class: 'opac-5', path: '/tutors' },
+                                                        type: '', class: 'opac-5', path: '/vs/classroom' },
+    {id: 1, icon: 'assets/Student/noun-assignment-3202074.svg', text: 'Book Tutor', subtext : 'Pending tasks', value : '8', type: '', class: 'opac-5', path: '/vs/tutors' },
     {id: 2, icon: 'assets/Student/path.svg', text: 'My Profile',
-                                                      subtext : 'Completed', value : '0%', type: '', class: 'student-profile', path: '/profile' },
+                                                      subtext : 'Completed', value : '0%', type: '', class: 'student-profile', path: '/vs/profile' },
     {id: 3, icon: 'assets/Student/my-earnings.svg',
-                                  text: 'Study Material', subtext : 'Resources', value : '0', type: '', class: 'opac-5', path: '/student/assignments' },
+                                  text: 'Study Material', subtext : 'Resources', value : '0', type: '', class: 'opac-5', path: '/vs/student/assignments' },
     {id: 4, icon: 'assets/Student/chart-pie-36.svg', text: 'Progress Reports',
-                                  subtext : 'Credits', value : '0', type: '', class: 'opac-5', path: '/progress' }
+                                  subtext : 'Credits', value : '0', type: '', class: 'opac-5', path: '/vs/progress' }
   ];
 
   constructor(private authService: AuthserviceService, private userService: UserService,
@@ -82,7 +82,7 @@ export class DashboardComponent implements OnInit {
     this.CreateWishes();
     this.user = this.authService.userValue;
     this.userService.getProfileData(this.user.id).subscribe(x => {this.profile = x; });
-    this.istutor = this.user.role === 1;
+    this.istutor = this.user.role === 'Tutor';
     this.staticService.getStatistics(this.authService.userValue.id).subscribe(x => {
       this.statistics = x;
       if (this.istutor){

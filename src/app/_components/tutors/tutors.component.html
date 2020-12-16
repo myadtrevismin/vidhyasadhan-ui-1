@@ -1,11 +1,12 @@
 <div class="m-4 bg-tutor">
   <mat-toolbar class="tutor-header">
     <span>Book Tutor</span>
+    <span class="lead" *ngIf="disableDemo">Maximum Demo Limit of 3 per month reached</span>
   </mat-toolbar>
-  <div class="card">
+  <div class="card min-card">
     <div class="card-header bg-white">
       <form [formGroup]="searchForm" (submit)="filterItem()">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
+        <div class="d-flex justify-content-between flex-wrap flex-lg-nowrap">
           <mat-form-field>
             <mat-label>Area</mat-label>
             <input matInput placeholder="Area" formControlName="location">
@@ -85,7 +86,7 @@
         <div class="row text-vs-center no-gutters">
           <div class="col-md-2">
             <!-- <img  [src]="tutor.profilePic"> -->
-            <img [src]="tutor.account.profilePic || 'assets/profile-pic.svg'" class="img-thumbnail p-2 mx-auto d-block">
+            <img [src]="tutor.accountDetails?.profilePic || 'assets/profile-pic.svg'" class="img-thumbnail p-2 mx-auto d-block">
           </div>
           <div class="col-md-10">
             <div class="card-body">
@@ -128,18 +129,18 @@
                 </mat-divider>
                 <div class="col-md-5">
                   <span>Schedules</span>
-                  <div *ngIf="!tutor.account.courseAssignments || tutor.account.courseAssignments.length === 0"
+                  <div *ngIf="!tutor.events || tutor.events.length === 0"
                     class="alert alert-info">
                     No Schedule is Available
                   </div>
                   <ul class="list-group text-list list-height">
                     <li class="list-group-item p-1 border-0 d-flex justify-content-between align-items-center"
-                      *ngFor="let assignment of tutor.account.courseAssignments">
-                      {{assignment.course.startDate | date:'mediumDate'}}
+                      *ngFor="let assignment of tutor.events">
+                      {{assignment.startDate | date:'mediumDate'}}
                       <span class="badge badge-pill"
-                        [ngClass]="assignment.course.isDemo ? 'badge-primary' : 'badge-warning'"
-                        matTooltip="{{assignment.course.title}}">{{assignment.course.startTime}} :
-                        {{assignment.course.endTime}}</span>
+                        [ngClass]="assignment.isDemo ? 'badge-primary' : 'badge-warning'"
+                        matTooltip="{{assignment.title}}">{{assignment.startTime}} :
+                        {{assignment.endTime}}</span>
                     </li>
                   </ul>
                 </div>

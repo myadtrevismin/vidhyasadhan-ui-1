@@ -11,13 +11,13 @@
 }
 
 .bg-welcome{
-    background-image: url("/vidhyasadhan-ui/assets/welcome/bg.svg");
+    background-image: url("/assets/welcome/bg.svg");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .jumbo-bg{
-   background-color: #f5f6f6;  
+   background-color: #f5f6f6;
 }
 
 .activate-text{

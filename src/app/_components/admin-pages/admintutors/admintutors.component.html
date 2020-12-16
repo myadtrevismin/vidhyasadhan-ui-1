@@ -26,15 +26,15 @@
       </ng-container>
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-        <td mat-cell *matCellDef="let row"> {{row.account.email}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.email}} </td>
       </ng-container>
       <ng-container matColumnDef="profilePic">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Profile </th>
-        <td mat-cell *matCellDef="let row"> <img class="profile" [src]="row.account.profilePic"> </td>
+        <td mat-cell *matCellDef="let row"> <img class="profile" [src]="row.accountDetails?.profilePic"> </td>
       </ng-container>
       <ng-container matColumnDef="phone" stickyEnd>
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
-        <td mat-cell *matCellDef="let row"> {{row.account.phoneNumber}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.phone}} </td>
       </ng-container>
 
       <!-- <ng-container matColumnDef="startdate" stickyEnd>

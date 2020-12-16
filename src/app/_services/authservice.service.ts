@@ -63,7 +63,7 @@ export class AuthserviceService implements OnDestroy {
   }
 
   login(username: string, password: string, role: number) {
-    return this.http.post < any > (`${environment.apiUrl}/users/authenticate`, {
+    return this.http.post < any > (`${environment.apiUrl}/accounts/authenticate`, {
        email : username,
        password,
        rememberMe: false,
@@ -81,10 +81,12 @@ export class AuthserviceService implements OnDestroy {
   }
 
   logout() {
-    localStorage.removeItem('user');
-    this.http.post < any > (`${environment.apiUrl}/users/logout`, {}, {
-      withCredentials: true
+    const token = JSON.parse(localStorage.getItem('user'));
+    this.http.post<any>(`${environment.apiUrl}/accounts/revoke-token`, {token: token?.refreshToken}, {
+      withCredentials: true,
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     }).subscribe();
+    localStorage.removeItem('user');
     this.stopRefreshTokenTimer();
     this.userSubject.next(null);
     this.router.navigate(['/login']);
@@ -92,7 +94,7 @@ export class AuthserviceService implements OnDestroy {
 
   tokenRefresh() {
     const usert: User = JSON.parse(localStorage.getItem('user')) ;
-    return this.http.post < any > (`${environment.apiUrl}/users/refreshtoken`, {
+    return this.http.post < any > (`${environment.apiUrl}/accounts/refresh-token`, {
       Token: usert?.refreshToken
     }, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -118,10 +120,11 @@ export class AuthserviceService implements OnDestroy {
     clearTimeout(this.refreshTokenTimeout);
   }
 
-  confirmEmail(user){
-    const options = user ?
-    { params: new HttpParams().set('userId', user.userId).append('token', user.token) } : {};
-    return this.http.get<any>(`${environment.apiUrl}/users/confirm`, options);
+  confirmEmail(value: any) {
+    return this.http.post<any> (`${environment.apiUrl}/accounts/verify-email`, {token: value},
+    {
+      withCredentials: true
+    });
   }
 
   reConfirm(user: User){
@@ -132,8 +135,16 @@ export class AuthserviceService implements OnDestroy {
 
   verifyotp(userid, otp: string){
     const options = otp ?
-    { params: new HttpParams().set('code', otp).append('email', userid )} : {};
-    return this.http.get<any>(`${environment.apiUrl}/users/verifycode`, options);
+    { params: new HttpParams().set('otp', otp)} : {};
+
+    return this.http.get<any>(`${environment.apiUrl}/accounts/verifyotp`, {
+      withCredentials: true,
+      params: options.params
+    }).pipe(map(user => {
+      this.userSubject.next(user);
+      this.startRefreshTokenTimer();
+      return user;
+    }));
   }
 
   resendotp(emailId){
@@ -142,8 +153,26 @@ export class AuthserviceService implements OnDestroy {
     return this.http.get<any>(`${environment.apiUrl}/users/regeneratecode`, options);
   }
 
+  sendOtp(phone){
+    return this.http.post<any>(`${environment.apiUrl}/accounts/generateotp`, phone);
+  }
+
   forgotpassword(passwordmodel){
-    return this.http.post<boolean>(`${environment.apiUrl}/users/password/reset`, passwordmodel);
+    return this.http.post<any> (`${environment.apiUrl}/accounts/forgot-password`, passwordmodel, {
+      withCredentials: true
+    })
+    .pipe(map(user => {
+      return user;
+    }));
+  }
+
+  resetpassword(passwordmodel){
+    return this.http.post<any> (`${environment.apiUrl}/accounts/reset-password`, passwordmodel, {
+      withCredentials: true
+    })
+    .pipe(map(user => {
+      return user;
+    }));
   }
 
 }

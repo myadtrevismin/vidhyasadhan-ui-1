@@ -10,6 +10,6 @@ export class StudymaterialService {
   constructor(private http: HttpClient) { }
 
   getMaterials(){
-    return this.http.get<any>(`${environment.apiUrl}/subjects/materials`);
+    return this.http.get<any>(`${environment.apiUrl}/material`);
   }
 }

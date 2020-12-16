@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { AdminService } from 'src/app/_services/admin.service';
 import { AlertService } from 'src/app/_services/alert.service';
 import { UserService } from 'src/app/_services/user.service';
 
@@ -17,7 +18,7 @@ export class AdminstudentsComponent implements OnInit, AfterViewInit {
 
   error;
 
-  constructor(private userService: UserService, private alertService: AlertService) { }
+  constructor(private adminService: AdminService, private alertService: AlertService) { }
 
   displayedColumns: string[] = ['sno', 'name', 'email', 'profilePic', 'phone'];
   dataSource: MatTableDataSource<any>;
@@ -33,8 +34,8 @@ export class AdminstudentsComponent implements OnInit, AfterViewInit {
   }
 
   loadStudents(){
-    this.userService.getStudents().subscribe(x => {
-      this.dataSource.data = x;
+    this.adminService.getadminData().subscribe(x => {
+      this.dataSource.data = x.students;
     }, (error) => {
       this.alertService.error(error);
     });

@@ -10,7 +10,7 @@
               <img src="assets/event.svg">
             </div>
             <div class="col-sm-8">
-              <h2>100</h2>
+              <h2>{{adminData?.classesOrDemos.length}}</h2>
             </div>
           </div>
         </div>
@@ -25,7 +25,7 @@
               <img src="assets/admin/tutors.svg">
             </div>
             <div class="col-sm-8">
-              <h2>50</h2>
+              <h2>{{adminData?.tutors.length}}</h2>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
               <img src="assets/website/pricing/pricing-1.png">
             </div>
             <div class="col-sm-8">
-              <h2>1k</h2>
+              <h2>{{adminData?.totalRevenue}}</h2>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
               <img src="assets/website/aboutus/about-2.png">
             </div>
             <div class="col-sm-8">
-              <h2>10</h2>
+              <h2>{{adminData?.newRequests.length}}</h2>
             </div>
           </div>
         </div>
@@ -109,37 +109,15 @@
           </div>
           <div *ngIf="card.title === 'Requests'">
             <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                New Tutor Request by Tutor 1
+              <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let tutor of tutorrequests">
+                New Tutor Request from {{tutor.name}}
                 <a mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                   <mat-icon>more_vert</mat-icon>
                 </a>
                 <mat-menu #menu="matMenu" xPosition="before">
-                  <a mat-menu-item>Accept</a>
-                  <a mat-menu-item>Reject</a>
-                  <a mat-menu-item>Respond</a>
-                </mat-menu>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                New Tutor Request by Tutor 2
-                <a mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                  <mat-icon>more_vert</mat-icon>
-                </a>
-                <mat-menu #menu="matMenu" xPosition="before">
-                  <a mat-menu-item>Accept</a>
-                  <a mat-menu-item>Reject</a>
-                  <a mat-menu-item>Respond</a>
-                </mat-menu>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                New Tutor Request by Tutor 3
-                <a mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                  <mat-icon>more_vert</mat-icon>
-                </a>
-                <mat-menu #menu="matMenu" xPosition="before">
-                  <a mat-menu-item>Accept</a>
-                  <a mat-menu-item>Reject</a>
-                  <a mat-menu-item>Respond</a>
+                  <a mat-menu-item (click)="takeAction(tutor, 1)">Accept</a>
+                  <a mat-menu-item (click)="takeAction(tutor, 2)">Reject</a>
+                  <a mat-menu-item (click)="takeAction(tutor, 3)">Respond</a>
                 </mat-menu>
               </li>
             </ul>

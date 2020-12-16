@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="!doEvaluate">
   <div *ngSwitchCase="true">
-    <mat-card>
+    <mat-card class="min-card">
       <mat-card-header class="header-rad">
         <mat-card-title class="evaluate-tasks">Evaluate Tasks</mat-card-title>
         <mat-card-subtitle>Total Tasks: {{dataSource.data.length}}</mat-card-subtitle>
@@ -64,7 +64,7 @@
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Name </th>
               <td mat-cell *matCellDef="let row">
-                <img class="rounded-circle" [src]="row.account.profilePic" width="30" height="30">
+                <img class="rounded-circle" [src]="row.account.accountDetails[0]?.profilePic" width="30" height="30">
                 {{row.account.firstName}} {{row.account.lastName}}
               </td>
             </ng-container>

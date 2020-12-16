@@ -76,24 +76,26 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const regUser: User = {
+    const regUser: any = {
        firstName : this.f.firstName.value,
        lastName: this.f.lastName.value,
        email: this.f.email.value,
        password: this.f.password.value,
        phone: this.f.phone.value,
        username: this.f.email.value,
-       role: this.isTutor ? 1 : 0,
+       confirmPassword: this.f.confirmPassword.value,
+       acceptTerms: true,
+       title: this.isTutor ? 'tutor' : 'student',
+       role: this.isTutor ? 1 : 2,
     };
 
-    this.userService.addUser(regUser)
+    this.loading = true;
+    this.userService.register(regUser)
     .subscribe(data => {
-      if (data === true){
-        this.alertService.success('Registration Complete. Check your email to confirm!', this.options);
-      }else{
-        this.alertService.error('Unable to Complete Registration', this.options);
-      }
-     }, error => this.alertService.error(error, this.options));
+      this.alertService.success(data.message, this.options);
+      this.router.navigate(['login']);
+      this.loading = false;
+     }, error => {this.alertService.error(error, this.options); this.loading = false; });
 
   }
 

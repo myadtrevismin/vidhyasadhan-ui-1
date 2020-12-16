@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+      "node_modules{,/**}",
+      ".vscode{,/**}"
+    ],
+    "appService.deploySubpath": "dist\\vidhyasadhan-ui",
+    "appService.defaultWebAppToDeploy": "/subscriptions/f381a9c1-4b3a-44eb-95d6-4adf5d64fd00/resourceGroups/vsadhan-rgp/providers/Microsoft.Web/sites/vidhyasadhandev"
+}

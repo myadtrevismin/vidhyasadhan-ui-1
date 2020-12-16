@@ -1,5 +1,5 @@
 <ng-container>
-  <div class="card m-2">
+  <div class="card m-2 min-card">
     <div class="card-header material-bg">
       <div class="d-flex justify-content-between">
         <div>{{selectedAction.name}}</div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="card-body">
                   <h3 class="card-title title">{{course.subject}} - {{course.grade}}</h3>
-                  <p class="card-sub-title subtitle">Tutor: {{course?.courseAssignments[0]?.instructor?.firstName}} {{course?.courseAssignments[0]?.instructor?.lastName}}</p>
+                  <p class="card-sub-title subtitle">Tutor: {{course?.owner?.firstName | uppercase}} {{course?.owner?.lastName | uppercase}}</p>
                   <div class="card-text perfomed">
                     <div class="d-flex">
                       <span>{{course.locationName}}</span>

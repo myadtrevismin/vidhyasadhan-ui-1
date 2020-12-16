@@ -135,6 +135,7 @@ export class EventdetailComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
+    console.log(this.demoFormControls.location.value);
     if (this.demoForm.valid)
     {
       const demodata: Demo = {
@@ -149,35 +150,38 @@ export class EventdetailComponent implements OnInit {
         endDate: this.demoFormControls.endDate.value,
         startTime: this.demoFormControls.startTime.value,
         endTime: this.demoFormControls.endTime.value,
-        courseAssignments: [{
-          instructorID: this.authService.userValue.id,
-          courseID: null
-        }],
+        ownerId: Number.parseInt(this.authService.userValue.id, 10),
+        // courseAssignments: [{
+        //   instructorID: this.authService.userValue.id,
+        //   courseID: null
+        // }],
         enrollments: [],
         locationName: this.demoFormControls.location.value.locationName,
         locationId: this.demoFormControls.location.value.locationId,
         langitude: this.demoFormControls.location.value.langitude,
         latitude: this.demoFormControls.location.value.latitude,
-        calendarEvent: {
-          summary: this.demoFormControls.title.value,
-          location: this.demoFormControls.location.value.locationName,
-          description: this.demoFormControls.courseDescription.value,
-          timeZone: 'Asia/Calcutta',
-          start: this.getDateforTimes(this.demoFormControls.startDate.value, this.demoFormControls.startTime.value),
-          end: this.getDateforTimes(this.demoFormControls.startDate.value, this.demoFormControls.endTime.value),
-          recurrence: this.createRecurrance(),
-          attendees: [
-            this.authService.userValue.email
-          ],
-          organizer: null,
-        },
+        // calendarEvent: {
+        //   summary: this.demoFormControls.title.value,
+        //   location: this.demoFormControls.location.value.locationName,
+        //   description: this.demoFormControls.courseDescription.value,
+        //   timeZone: 'Asia/Calcutta',
+        //   start: this.getDateforTimes(this.demoFormControls.startDate.value, this.demoFormControls.startTime.value),
+        //   end: this.getDateforTimes(this.demoFormControls.startDate.value, this.demoFormControls.endTime.value),
+        //   recurrence: this.createRecurrance(),
+        //   attendees: [
+        //     this.authService.userValue.email
+        //   ],
+        //   organizer: null,
+        // },
         isDemo: this.demoFormControls.eventType.value === 'Demo',
         isOnline: this.demoFormControls.video.value,
+        selectedDays: this.days.filter(x => x.selected).map(x => x.day).join(','),
       };
 
-      this.demoService.createDemo(demodata).subscribe(x => {
-        if ( x >= 0){
+      this.demoService.createDemo(demodata).subscribe((x: Demo) => {
+        if (x?.courseId !== (null || undefined)){
           this.alertService.success('Succesfully Created Event', this.alertOptions);
+          this.gotoList();
         }
         else{
           this.alertService.error('Unable to Create Event', this.alertOptions);
@@ -185,8 +189,6 @@ export class EventdetailComponent implements OnInit {
       },
      (error) => this.alertService.error(error, this.alertOptions));
     }
-
-    this.gotoList();
   }
 
   getDateforTimes(date: Date, time){
@@ -244,6 +246,16 @@ export class EventdetailComponent implements OnInit {
   changeDays(check, day){
     day.selected = check;
     this.allChecked = this.days.filter(t => t.selected).length > 0 ? false : this.allChecked;
+  }
+
+  dateChanged(){
+    if (this.demoFormControls.startDate.valid && this.demoFormControls.endDate.valid){
+      const diff = this.demoFormControls.endDate.value.getTime() - this.demoFormControls.startDate.value.getTime();
+      console.log(diff);
+      if (diff < 0){
+        this.demoFormControls.endDate.setErrors({lesserdate: true});
+      }
+    }
   }
 
   createRecurrance(){

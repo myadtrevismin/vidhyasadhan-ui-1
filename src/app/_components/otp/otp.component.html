@@ -1,45 +1,79 @@
 <mat-toolbar class="w-100 p-2 justify-content-center">
-    <img src="assets/registration/vidhya-sandhhan.svg" class="vidhya-sadhan">
+  <img src="assets/registration/vidhya-sandhhan.svg" class="vidhya-sadhan">
 </mat-toolbar>
 <div class="equal-container login-side">
-    <div class="equal-col">
-        <div class="row">
-            <div class="col-md-4 offset-md-1">
-                <mat-card class="text-center o-card">
-                    <mat-card-content>
-                     <h4 class="otp-title">Please enter the One-Time Password
-                         to verify your account</h4>
-                         <img src="assets/OTP/locked.svg"  class="locked" >
-                     <h5 class="p-4">
-                        A One-Time Password has been sent to your number ending with *** {{phone}}
-                     </h5>
+  <div class="equal-col">
+    <div class="row">
+      <div class="col-md-4 offset-md-1">
+        <mat-card class="text-center o-card">
+          <mat-card-content>
+            <h4 class="otp-title">Please enter the One-Time Password
+              to verify your account</h4>
+            <img src="assets/OTP/locked.svg" class="locked">
+            <h5 class="p-4">
+              A One-Time Password will be sent to your number entered: {{phoneForm.get('phone').value}}
+            </h5>
 
-                     <mat-grid-list cols="6" rowHeight="50px">
-                         <mat-grid-tile
-                             *ngFor="let tile of otpcode; let i = index"
-                             [colspan]="1"
-                             [rowspan]="1">
-                                 <input class="rectangle" [tabindex]="i+10" maxlength="1" autofocus type="text" name="{{tile.name}}"  [(ngModel)]="tile.value" (keyup)="entervalue($event)">
-                         </mat-grid-tile>
-                     </mat-grid-list>
-
-                     <button class="btn btn-primary m-4" mat-raised-button (click)="onSubmit()">Validate</button>
-                     <div class="d-flex m-4">
-                         <p class="wrong-num">Entered a wrong number?</p>
-                         <p class="resend ml-auto"><a (click)="resendcode()">Resend One-time Password</a></p>
-                     </div>
-                     <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="tokenMessage">
-                       <strong>{{tokenMessage}}</strong>
-                       <mat-icon (click)="tokenMessage = null">close</mat-icon>
-                     </div>
-                     <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="error">
-                        <strong>{{error}}</strong>
-                        <mat-icon (click)="error = null">close</mat-icon>
+            <div [ngSwitch]="resend">
+              <div *ngSwitchCase="true">
+                <form class="form" [formGroup]="phoneForm" (submit)="sendOtp()">
+                  <div class="form-row align-items-center justify-content-center">
+                    <div class="col-auto">
+                      <label class="sr-only" for="inlineFormInputGroup">Registered Phone</label>
+                      <div class="input-group mb-2">
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-phone" fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                d="M11 1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z" />
+                              <path fill-rule="evenodd" d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                            </svg>
+                          </div>
+                        </div>
+                        <input type="text" class="form-control" formControlName="phone" id="phone"
+                          placeholder="10 Digit Phone number">
                       </div>
-                    </mat-card-content>
-                </mat-card>
+                    </div>
+                    <div class="col-auto">
+                      <button mat-flat-button type="submit" class="mat-button-base" color="accent" [disabled]="loading">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div *ngSwitchCase="false">
+                <mat-grid-list cols="5" rowHeight="50px">
+                  <mat-grid-tile *ngFor="let tile of otpcode; let i = index" [colspan]="1" [rowspan]="1">
+                    <input class="rectangle" [tabindex]="i+10" maxlength="1" autofocus type="text" name="{{tile.name}}"
+                      [(ngModel)]="tile.value" (keyup)="entervalue($event)">
+                  </mat-grid-tile>
+                </mat-grid-list>
+                <button class="btn btn-primary m-4" mat-raised-button (click)="onSubmit()">Validate</button>
+                <div class="d-flex m-4">
+                  <p class="wrong-num">Entered a wrong number?</p>
+                  <p class="resend ml-auto"><a (click)="resend = true">Resend One-time Password</a></p>
+                </div>
+              </div>
             </div>
-        </div>
 
+            <div *ngIf="tokenMessage" class="alert alert-success mt-3 mb-0">{{tokenMessage}}
+              <a (click)="tokenMessage = null">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              </a> </div>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}
+              <a (click)="error = null">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              </a></div>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
+  </div>
 </div>

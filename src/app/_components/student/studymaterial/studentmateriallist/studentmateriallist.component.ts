@@ -22,21 +22,30 @@ export class StudentmateriallistComponent implements AfterViewInit, OnInit {
   href;
 
   slides = [
-    { id: 1, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 1' },
-    { id: 2, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 2'},
-    { id: 3, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 3'},
-    { id: 4, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 4'},
-    { id: 5, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 5'}
+    // { id: 1, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 1' },
+    // { id: 2, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 2'},
+    // { id: 3, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 3'},
+    // { id: 4, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 4'},
+    // { id: 5, video: 'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=', title: 'video 5'}
   ];
 
   constructor(private route: Router, private studyMaterial: StudymaterialService){
     this.href = this.route.url;
-    this.slides.forEach(x => x.video += window.location.origin);
   }
 
   ngOnInit() {
     this.dataSource = new StudentmateriallistDataSource();
-    this.studyMaterial.getMaterials().subscribe(x => this.dataSource.data = x);
+    this.studyMaterial.getMaterials().subscribe(x => {
+      this.dataSource.data = x;
+      x.forEach(a => {
+       a.files?.forEach(element => {
+          this.slides.push({video: element.filePath, title: element.filePath});
+        });
+      });
+
+      this.slides.forEach(x => x.video += window.location.origin);
+
+    } );
   }
 
   ngAfterViewInit() {

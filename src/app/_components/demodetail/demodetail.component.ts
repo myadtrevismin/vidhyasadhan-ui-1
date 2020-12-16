@@ -35,18 +35,16 @@ export class DemodetailComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.course);
-    this.demoService.getDemoById(this.course.courseId).subscribe(x => {
-      this.demo = x;
-      const enrollmentarray = [];
-      this.demo?.enrollments?.forEach(e => {
+    this.demo = this.course;
+    const enrollmentarray = [];
+    this.demo?.enrollments?.forEach(e => {
         enrollmentarray.push({
-          name : e.student.firstName + ' ' + e.student.lastName,
-          email: e.student.email,
-          phone: e.student.phoneNumber
+          name : e.account.firstName + ' ' + e.account.lastName,
+          email: e.account.email,
+          phone: e.account.phone
         });
       });
-      this.enrollments = new MatTableDataSource(enrollmentarray);
-    });
+    this.enrollments = new MatTableDataSource(enrollmentarray);
   }
 
   returnToList(){

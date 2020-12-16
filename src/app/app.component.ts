@@ -15,9 +15,7 @@ export class AppComponent implements OnInit {
   user: User;
   showFiller = false;
 
-  constructor(private authService: AuthserviceService,
-              public notificationMiddleware: NotificationMiddlewareService,
-              private swUpdate: SwUpdate){
+  constructor(private authService: AuthserviceService){
     this.authService.user.subscribe(x => this.user = x);
   }
 

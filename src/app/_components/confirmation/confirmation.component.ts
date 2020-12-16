@@ -20,22 +20,15 @@ export class ConfirmationComponent implements OnInit {
   };
   success;
   isResend;
+  error;
 
   authUser: User;
 
   ngOnInit(): void {
-    this.authUser = this.authservice.userValue;
-    console.log(this.route.snapshot.paramMap.get('userid'));
-    console.log(this.route.snapshot.paramMap.get('token'));
-    this.route.params.subscribe(
-      (params) =>
-      {
-        this.user = {
-          userId: params.userid,
-          token: params.token
-        };
-        this.authservice.confirmEmail(this.user).subscribe(x =>  this.router.navigate(['/login']));
-      });
+    const token = this.route.snapshot.paramMap.get('token');
+    console.log(token);
+    this.authservice.confirmEmail(token).subscribe(x =>  this.success = true, (error) => this.success = false);
+    //this.router.navigate(['/login'];
   }
 
   confirmEmail(){

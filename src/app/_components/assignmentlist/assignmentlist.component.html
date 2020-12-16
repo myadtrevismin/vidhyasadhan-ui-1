@@ -59,13 +59,13 @@
     <mat-form-field class="ml-2">
       <mat-label>Assign To</mat-label>
       <mat-select [(ngModel)]="selectedstudents" multiple>
-        <mat-option *ngFor="let enrollment of selectedCourse?.enrollments" [value]="enrollment.student">
-          {{enrollment.student?.firstName}} {{enrollment.student?.lastName}}
+        <mat-option *ngFor="let enrollment of selectedCourse?.enrollments" [value]="enrollment.account">
+          {{enrollment.account?.firstName}} {{enrollment.account?.lastName}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <a class="ml-2" mat-raised-button color="accent" (click)="addAssignments()"
-      [disabled]="!selectedstudents">Submit</a>
+      [disabled]="!selectedstudents && selection.selected.length == 0">Submit</a>
   </div>
 </div>
 

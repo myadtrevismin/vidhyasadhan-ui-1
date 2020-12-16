@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="139" height="139" fill="none" viewBox="0 0 139 139">
+    <path fill="url(#pattern0)" d="M69.501 138.08c38.071 0 68.934-30.862 68.934-68.933 0-38.07-30.863-68.933-68.934-68.933C31.431.214.568 31.076.568 69.147c0 38.071 30.863 68.933 68.933 68.933z"/>
+    <defs>
+        <pattern id="pattern0" width="1" height="1" patternContentUnits="objectBoundingBox">
+            <use transform="scale(.00098)" xlink:href="#image0"/>
+        </pattern>
+    </defs>
+</svg>

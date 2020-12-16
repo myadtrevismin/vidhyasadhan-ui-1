@@ -41,18 +41,14 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          Schedule
-          <mat-form-field class="w-25 ml-1" appearance="outline">
-            <mat-label for="startDate">From</mat-label>
-            <input formControlName="startDate" matInput id="startDate" [matDatepicker]="picker">
+          <mat-form-field  appearance="outline">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate placeholder="Start date" formControlName="startDate">
+              <input matEndDate placeholder="End date" formControlName="endDate">
+            </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field class="w-25 ml-1" appearance="outline">
-            <mat-label for="endDate">To</mat-label>
-            <input formControlName="endDate" matInput id="endDate" [matDatepicker]="picker1">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
+            <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
         </div>
         <div class="form-group col-md-6">

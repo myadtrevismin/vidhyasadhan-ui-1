@@ -5,22 +5,55 @@ export interface User {
     password: string;
     firstName: string;
     lastName: string;
+    name?: string;
     phone: string;
     jwtToken?: string;
     refreshToken?: string;
     gender?: string;
-    addresses?: Address[];
+    address?: Address;
+    accountDetails?: AccountDetail;
     profilePic?: string;
-    role?: number;
+    role?: any;
 }
 
 export interface Address{
-    addressId: number;
+    addressId?: number;
     addressType: number;
+    id?: number;
     address1: string;
     address2: string;
     city: string;
     pinCode: string;
     stateCd: string;
     countryCd: string;
+}
+
+export interface AccountDetail{
+   id?: number;
+   profilePic: string;
+   sex: string;
+   dateOfBirth: Date;
+   enrollmentDate: Date;
+   naCategory: string;
+   naSubCategory: string;
+   ageGroup: string;
+   certification: string;
+   board: string;
+   academyTypeId: number;
+   subjects: string;
+   level: string;
+   isTutorBefore: true;
+   professionalDescription: string;
+   highestEducation: string;
+   preference: string;
+   availableDays: string;
+   preferredDistance: number;
+   preferredTimeSlot: string;
+   hourlyRate: number;
+   currency: string;
+   idType: string;
+   idDoc: string;
+   demoLink: string;
+   intersets: string;
+   medium: string;
 }

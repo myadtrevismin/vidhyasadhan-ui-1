@@ -3,7 +3,7 @@
 </div> -->
 
 
-<div class="card m-2">
+<div class="card m-2 min-card">
   <!-- <div class="card-header bg-tutor-primary">
           <div>Demo Requests</div>
         </div> -->
@@ -20,7 +20,8 @@
           </a>
         </div>
         <div class="lh-40">
-          <mat-slide-toggle color="Primary">Online</mat-slide-toggle>
+          <mat-slide-toggle (toggleChange)="filterRequests($event)" [(ngModel)]="checked" color="Primary">Online
+          </mat-slide-toggle>
         </div>
 
       </div>
@@ -100,11 +101,12 @@
     <ng-container [ngSwitch]="selectedAction">
       <div class="container-fluid">
         <ng-container *ngSwitchCase="actionIcons[0]">
-          <div class="card card-chip mb-3" *ngFor="let element of demoRequests">
+          <div class="card card-chip mb-3" *ngFor="let element of filteredRequests">
             <div class="row no-gutters">
               <div class="col-md-2">
                 <div class="card-img">
-                  <img [src]="element.student.profilePic" class="img-thumbnail m-2" width="200">
+                  <img [src]="element.account?.accountDetails?.profilePic || 'assets/profile-pic.svg'"
+                    class="img-thumbnail m-2" width="200">
                   <img src="assets/demo/group-10-copy-3.png"
                     srcset="assets/demo/group-10-copy-3@2x.png 2x,assets/demo/group-10-copy-3@3x.png 3x"
                     class="Group-10-Copy-3">
@@ -113,8 +115,7 @@
               <div class="col-md-10">
                 <div class="card-body">
                   <h5 class="card-title text-dark">
-                    <a class="Student-Name-10th-S"> {{element.student.firstName | uppercase}}
-                      {{element.student.lastName | uppercase}}
+                    <a class="Student-Name-10th-S"> {{element.account?.name | uppercase}}
                     </a>
                   </h5>
                   <div class="card-text Requested-Subs-M">
@@ -126,7 +127,7 @@
                       </div>
                       <div class="col">
                         <p class="address">Address</p>
-                        <p class="v-map">{{element.course?.locationName}} - <a
+                        <p class="v-map">{{element.event?.locationName}} - <a
                             (click)="selectedAction = actionIcons[2]">View On Map</a></p>
                       </div>
                       <div class="col-12">
@@ -148,12 +149,13 @@
         <ng-container *ngSwitchCase="actionIcons[1]">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-md-4" *ngFor="let element of demoRequests">
+              <div class="col-md-4" *ngFor="let element of filteredRequests">
                 <div class="card card-chip mb-3">
                   <div class="row no-gutters">
                     <div class="col-md-12">
                       <div class="card-img">
-                        <img [src]="element.student.profilePic" class="img-thumbnail m-2" width="200">
+                        <img [src]="element.account?.accountDetails?.profilePic || 'assets/profile-pic.svg'"
+                          class="img-thumbnail m-2" width="200">
                         <img src="assets/demo/group-10-copy-3.png"
                           srcset="assets/demo/group-10-copy-3@2x.png 2x,assets/demo/group-10-copy-3@3x.png 3x"
                           class="Group-10-Copy-3">
@@ -162,8 +164,7 @@
                     <div class="col-md-12">
                       <div class="card-body">
                         <h5 class="card-title text-dark">
-                          <a class="Student-Name-10th-S"> {{element.student.firstName | uppercase}}
-                            {{element.student.lastName | uppercase}}
+                          <a class="Student-Name-10th-S"> {{element.account?.name | uppercase}}
                           </a>
                         </h5>
                         <div class="card-text Requested-Subs-M">
@@ -175,7 +176,7 @@
                             </div>
                             <div class="col text-right">
                               <p class="address">Address</p>
-                              <p class="v-map">{{element.course?.locationName}} - <a
+                              <p class="v-map">{{element.event?.locationName}} - <a
                                   (click)="selectedAction = actionIcons[2]">View On Map</a></p>
                             </div>
                             <div class="col-12">
@@ -201,11 +202,12 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-7">
-                <div class="card card-chip mb-3" *ngFor="let element of demoRequests">
+                <div class="card card-chip mb-3" *ngFor="let element of filteredRequests">
                   <div class="row no-gutters">
                     <div class="col-md-2">
                       <div class="card-img">
-                        <img [src]="element.student.profilePic" class="img-thumbnail m-2" width="200">
+                        <img [src]="element.account?.accountDetails?.profilePic || 'assets/profile-pic.svg'"
+                          class="img-thumbnail m-2" width="200">
                         <img src="assets/demo/group-10-copy-3.png"
                           srcset="assets/demo/group-10-copy-3@2x.png 2x,assets/demo/group-10-copy-3@3x.png 3x"
                           class="Group-10-Copy-3">
@@ -214,8 +216,7 @@
                     <div class="col-md-10">
                       <div class="card-body">
                         <h5 class="card-title text-dark">
-                          <a class="Student-Name-10th-S"> {{element.student.firstName | uppercase}}
-                            {{element.student.lastName | uppercase}}
+                          <a class="Student-Name-10th-S"> {{element.account.name | uppercase}}
                           </a>
                         </h5>
                         <div class="card-text Requested-Subs-M">
@@ -227,7 +228,7 @@
                             </div>
                             <div class="col">
                               <p class="address">Address</p>
-                              <p class="v-map">{{element.course?.locationName}} - <a
+                              <p class="v-map">{{element.event?.locationName}} - <a
                                   (click)="selectedAction = actionIcons[2]">View On Map</a></p>
                             </div>
                             <div class="col-12">
@@ -247,18 +248,18 @@
                 </div>
               </div>
               <div class="col-md-5">
-                <app-mapcomponent [markersdata]="demoRequests"></app-mapcomponent>
-              </div>
-              <div *ngIf="demoRequests.length == 0 && loadDemo" class="alert alert-info">
-                There are no new requests at this time.
-              </div>
-              <div class="text-center">
-                <mat-spinner *ngIf="!loadDemo" [diameter]="30"></mat-spinner>
+                <app-mapcomponent [markersdata]="filteredRequests"></app-mapcomponent>
               </div>
             </div>
           </div>
         </ng-container>
       </div>
     </ng-container>
+    <div *ngIf="filteredRequests.length == 0 && loadDemo" class="alert alert-info">
+      There are no new requests.
+    </div>
+    <div class="text-center">
+      <mat-spinner *ngIf="!loadDemo" [diameter]="30"></mat-spinner>
+    </div>
   </div>
 </div>

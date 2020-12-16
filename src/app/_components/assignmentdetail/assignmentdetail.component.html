@@ -22,14 +22,24 @@
         <div class="col-md-6">
           <mat-form-field appearance="outline">
             <mat-label>Subject</mat-label>
-            <input type="text" matInput formControlName="subject" id="profilemail" placeholder="Subject">
+            <mat-select id="subject" formControlName="subject">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let subject of subjects" [value]="subject.name">
+                {{subject.name}}
+              </mat-option>
+            </mat-select>
             <mat-icon matPrefix>subject</mat-icon>
           </mat-form-field>
         </div>
         <div class="col-md-6">
           <mat-form-field appearance="outline">
             <mat-label>Grade/Standard</mat-label>
-            <input matInput type="text" formControlName="grade" id="grade" placeholder="Grade/Standard">
+            <mat-select id="grade" formControlName="grade">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let level of levels" [value]="level.groupId">
+                Grade - {{level.groupName}}
+              </mat-option>
+            </mat-select>
             <mat-icon matPrefix>class</mat-icon>
           </mat-form-field>
         </div>

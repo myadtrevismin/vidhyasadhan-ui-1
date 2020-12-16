@@ -24,7 +24,6 @@ export class DemomodelComponent implements OnInit {
 
   ngOnInit(): void {
     this.viewDate = new Date();
-    console.log(this.data);
 
     this.demomodelForm = this.formBuilder.group({
       demo: [null, Validators.required],
@@ -37,7 +36,7 @@ export class DemomodelComponent implements OnInit {
     this.submitted = true;
     if (this.demomodelForm.valid) {
       const demoreq: DemoRequest = {
-         tutorId: this.data.tutorinfo.account.id,
+         tutorId: this.data.tutorinfo.id,
          date: this.f.demo.value.startDate,
          studentId:  this.data.student.id,
          slot: this.f.demo.value.courseId,

@@ -1,10 +1,10 @@
 <mat-toolbar class="bg-white">
   <mat-toolbar-row>
     <span [ngSwitch]="navClicked">
-      <a *ngSwitchCase="true" [routerLink]="['/dashboard']">
+      <a *ngSwitchCase="true" [routerLink]="['dashboard']">
         <img src="assets/icons/vidhya-sandhhan.svg">
       </a>
-      <a *ngSwitchCase="false" [routerLink]="['/dashboard']">
+      <a *ngSwitchCase="false" [routerLink]="['dashboard']">
         <img src="assets/vidhyasadhan-logo.svg">
       </a>
     </span>
@@ -14,16 +14,9 @@
 
     <span class="example-spacer"></span>
 
-    <a mat-icon-button [matMenuTriggerFor]="notificationid" class="d-block d-sm-none">
+    <a mat-icon-button [routerLink]="['appnotify']" class="d-block d-sm-none">
       <mat-icon matBadge="{{notifications.length}}" matBadgeColor="warn">notifications</mat-icon>
     </a>
-    <mat-menu #notificationid="matMenu">
-      <div class="list-group">
-        <a mat-menu-item class="list-group-item list-group-item-warning" *ngFor="let note of notifications">
-          {{note.message}}
-        </a>
-      </div>
-    </mat-menu>
 
     <a mat-icon-button [matMenuTriggerFor]="auth1" class="d-block d-sm-none">
       <!-- <mat-icon>account_circle</mat-icon> -->
@@ -43,16 +36,9 @@
     <div class="d-none d-sm-block">
       <ul class="navbar-nav flex-row">
         <li fxHide.xs class="nav-item active">
-          <a mat-icon-button class="nav-link" [matMenuTriggerFor]="notificationid">
+          <a mat-icon-button [routerLink]="['appnotify']" class="nav-link">
             <mat-icon matBadge="{{notifications.length}}" matBadgeColor="warn">notifications</mat-icon>
           </a>
-          <mat-menu #notificationid="matMenu">
-            <div class="list-group">
-              <a mat-menu-item class="list-group-item list-group-item-warning" *ngFor="let note of notifications">
-                {{note.message}}
-              </a>
-            </div>
-          </mat-menu>
         </li>
 
         <li class="nav-item">
@@ -73,13 +59,15 @@
       </ul>
     </div>
   </mat-toolbar-row>
-  <mat-toolbar-row *ngIf="smClicked" class="h-100 d-block d-sm-none toolbar" [ngClass]="authService.userValue?.role === 0 ? 'student' : 'tutor'">
-    <ng-container [ngSwitch]="authService.userValue?.role === 0">
+  <mat-toolbar-row *ngIf="smClicked" class="h-100 d-block d-sm-none toolbar"
+    [ngClass]="authService.userValue?.role === 0 ? 'student' : 'tutor'">
+    <ng-container [ngSwitch]="authService.userValue?.role === 'Student'">
       <ng-container *ngSwitchCase="true">
         <ul class="navbar-nav mt-auto">
           <li class="nav-item active">
-            <a class="nav-link" (click)="smClicked = !smClicked" [routerLink]="['/vs/classroom']" >
-              <img class="img-nav" src="assets/Student/noun-teaching-2380320.svg"> My Classroom <span class="sr-only">(current)</span></a>
+            <a class="nav-link" (click)="smClicked = !smClicked" [routerLink]="['/vs/classroom']">
+              <img class="img-nav" src="assets/Student/noun-teaching-2380320.svg"> My Classroom <span
+                class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" (click)="smClicked = !smClicked" [routerLink]="['/vs/tutors']">
@@ -114,7 +102,8 @@
         <ul class="navbar-nav mt-auto">
           <li class="nav-item active">
             <a class="nav-link" (click)="smClicked = !smClicked" [routerLink]="['/vs/classroom']">
-              <img class="img-nav" src="assets/dashboard/noun-teaching-2380320.svg">My Classroom <span class="sr-only">(current)</span>
+              <img class="img-nav" src="assets/dashboard/noun-teaching-2380320.svg">My Classroom <span
+                class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
@@ -126,11 +115,11 @@
               <img class="img-nav" src="assets/dashboard/path.svg">My Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="smClicked = !smClicked"  [routerLink]="['/vs/events']">
+            <a class="nav-link" (click)="smClicked = !smClicked" [routerLink]="['/vs/events']">
               <img class="img-nav" src="assets/dashboard/vector.svg">My Events</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="smClicked = !smClicked"  [routerLink]="['/vs/earnings']">
+            <a class="nav-link" (click)="smClicked = !smClicked" [routerLink]="['/vs/earnings']">
               <img class="img-nav" src="assets/dashboard/my-earnings.svg">My Earnings</a>
           </li>
           <li class="nav-item">

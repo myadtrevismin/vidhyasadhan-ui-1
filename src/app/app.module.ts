@@ -112,6 +112,11 @@ import { PromoterlayoutComponent } from './_layouts/promoterlayout/promoterlayou
 import { PromoterregisterComponent } from './_components/promoter/promoterregister/promoterregister.component';
 import { PromoterloginComponent } from './_components/promoter/promoterlogin/promoterlogin.component';
 import { StudentpaymentsComponent } from './_components/student/studentpayments/studentpayments.component';
+import { AddressComponent } from './_components/profile/address/address.component';
+import { ForgotpasswordComponent } from './_components/login/forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './_components/login/resetpassword/resetpassword.component';
+import { AppnotificationsComponent } from './_components/appnotifications/appnotifications.component';
+import { AttendancemodalComponent } from './_components/attendancemodal/attendancemodal.component';
 
 @NgModule({
   declarations: [
@@ -185,7 +190,12 @@ import { StudentpaymentsComponent } from './_components/student/studentpayments/
     PromoterlayoutComponent,
     PromoterregisterComponent,
     PromoterloginComponent,
-    StudentpaymentsComponent
+    StudentpaymentsComponent,
+    AddressComponent,
+    ForgotpasswordComponent,
+    ResetpasswordComponent,
+    AppnotificationsComponent,
+    AttendancemodalComponent
   ],
   imports: [
     BrowserModule,
@@ -202,7 +212,7 @@ import { StudentpaymentsComponent } from './_components/student/studentpayments/
     GoogleChartsModule,
     NgxMatFileInputModule,
     GoogleMapsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     LayoutModule,
     MatToolbarModule,

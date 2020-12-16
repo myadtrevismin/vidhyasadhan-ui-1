@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Dashboard } from 'src/app/_models/dashboard';
+import { AdminService } from 'src/app/_services/admin.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -9,10 +10,10 @@ import { Dashboard } from 'src/app/_models/dashboard';
 export class AdminDashboardComponent implements OnInit {
 
   incomes: Dashboard[] = [
-    { icon: 'leaderboard', text: 'Total Sales', subtext : 'Events', value : '3148K', type: '', color: '#345398' },
-    { icon: 'work', text: 'Total Income', subtext : 'Pending tasks', value : '2349K', type: '', color: '#ddd374' },
-    { icon: 'business_center', text: 'Total Revenue', subtext : 'Total Revenue', value : '5489K', type: '', color: '#e85710' },
-    { icon: 'attach_money', text: 'Profits', subtext : 'Reward points', value : '20%', type: '', color: '#57c44e' }
+    { id: 0, icon: 'leaderboard', text: 'Total Sales', subtext : 'Events', value : '0', type: '', color: '#345398' },
+    { id: 1, icon: 'work', text: 'Total Income', subtext : 'Pending tasks', value : '0', type: '', color: '#ddd374' },
+    { id: 2, icon: 'business_center', text: 'Total Revenue', subtext : 'Total Revenue', value : '0', type: '', color: '#e85710' },
+    { id: 3, icon: 'attach_money', text: 'Profits', subtext : 'Reward points', value : '0%', type: '', color: '#57c44e' }
   ];
 
   schedule = {
@@ -50,9 +51,21 @@ export class AdminDashboardComponent implements OnInit {
    height: '400px',
   };
 
-  constructor() { }
+  constructor(private adminservice: AdminService) { }
 
   ngOnInit(): void {
+    this.adminservice.getadminData().subscribe(
+      x => {
+        this.mapdashboard(x);
+      }
+    );
+  }
+
+  mapdashboard(data){
+    this.incomes.find(x => x.id === 0).value = data.classesOrDemos.length;
+    this.incomes.find(x => x.id === 1).value = data.newRequests.length;
+    this.incomes.find(x => x.id === 2).value = data.totalRevenue.length;
+    this.incomes.find(x => x.id === 3).value = data.classesOrDemos.length;
   }
 
 }

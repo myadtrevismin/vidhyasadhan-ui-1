@@ -180,6 +180,7 @@ export class CalendarComponent implements OnInit {
     subscribe((x) => {
       this.courses = x;
       this.events = [];
+      console.log(x);
       x.forEach(element => {
         this.events.push(
           {

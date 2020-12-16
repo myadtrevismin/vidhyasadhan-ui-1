@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="750" height="600" viewBox="0 0 750 600">
+    <defs>
+        <radialGradient id="obkv4grs2b" cx="50%" cy="47.045%" r="98.664%" fx="50%" fy="47.045%" gradientTransform="matrix(0 1 -.8 0 .876 -.03)">
+            <stop offset="0%" stop-color="#319AE7"/>
+            <stop offset="99.929%" stop-color="#319AE7"/>
+        </radialGradient>
+        <path id="8tz2wgqj8a" d="M0 0H750V600H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <mask id="fkk8zjn58c" fill="#fff">
+            <use xlink:href="#8tz2wgqj8a"/>
+        </mask>
+        <use fill="url(#obkv4grs2b)" xlink:href="#8tz2wgqj8a"/>
+        <ellipse cx="39.273" cy="553.292" fill="#FFF" mask="url(#fkk8zjn58c)" opacity=".083" rx="73.273" ry="73.291"/>
+        <path fill="#FFF" fill-rule="nonzero" d="M523.39 535.174c.975.982 2.156 1.861 2.874 2.999 8.625 14.375 22.28 20.27 37.887 22.906 6.57 1.138 13.193 1.293 19.816.414.41.052.82.155 1.232.104 10.729-1.035 21.099-3.775 31.315-7.033 1.643-.568 3.234-1.292 4.825-1.965 4.415-1.447 8.882-2.792 13.245-4.343 12.886-4.499 25.822-9.152 39.426-10.91 6.623-.88 25.854-4.985 54.982 4.757l-.732-.243.127-.29c7.577 3.244 14.39 7.69 20.855 12.781l.744.59c12.6 10.107 22.113 22.702 29.055 37.317 1.235 2.644 2.109 5.39 3.24 8.137l-.771.467c-1.131-1.4-2.218-2.826-3.497-4.095-30.314-30.064-53.75-32.827-58.533-33.198l-.19.428s-31.077-2.918-95.178 24.022c-11.654 3.62-23.564 5.43-35.73 4.602-17.096-1.19-32.496-6.722-43.842-20.218-5.236-6.256-9.497-13.392-13.912-20.32-2.567-4.086-4.62-8.48-6.828-12.772-.564-1.138-.77-2.43-1.18-3.672l.77-.465z" mask="url(#fkk8zjn58c)" opacity=".146" transform="rotate(161 652.45 568.018)"/>
+        <ellipse cx="744.085" cy="487.96" stroke="#FFF" stroke-width="12" mask="url(#fkk8zjn58c)" opacity=".112" rx="22.229" ry="21.96"/>
+        <ellipse cx="712.727" cy="152.292" fill="#FFF" mask="url(#fkk8zjn58c)" opacity=".083" rx="73.273" ry="73.291"/>
+        <ellipse cx="61.776" cy="197.035" stroke="#64B2FF" stroke-width="12" mask="url(#fkk8zjn58c)" opacity=".347" rx="22.229" ry="21.96"/>
+    </g>
+</svg>

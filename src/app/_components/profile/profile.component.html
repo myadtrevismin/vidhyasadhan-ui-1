@@ -157,7 +157,7 @@
                 <div class="col-md-6">
                   <mat-form-field appearance="outline">
                     <mat-label for="medium">Medium Of Education</mat-label>
-                    <mat-select id="medium" formControlName="medium">
+                    <mat-select id="medium" multiple formControlName="medium">
                       <mat-option>None</mat-option>
                       <mat-option *ngFor="let medium of staticData?.mediums" [value]="medium.mediumName">
                         {{medium.mediumName}}
@@ -168,7 +168,7 @@
                 <div class="col-md-6">
                   <mat-form-field appearance="outline">
                     <mat-label for="subject">Subject Selection</mat-label>
-                      <mat-select id="subject" formControlName="subject">
+                      <mat-select id="subject" multiple formControlName="subject">
                         <mat-option>None</mat-option>
                         <mat-option *ngFor="let subject of subjects" [value]="subject.name">
                           {{subject.name}}
@@ -181,7 +181,7 @@
                 <div class="col-md-6">
                   <mat-form-field appearance="outline">
                     <mat-label for="board">Education Board</mat-label>
-                    <mat-select id="board" formControlName="board">
+                    <mat-select id="board" multiple formControlName="board">
                       <mat-option>None</mat-option>
                       <mat-option *ngFor="let board of staticData?.boards" [value]="board.boardName">
                         {{board.boardName}}
@@ -192,7 +192,7 @@
                 <div class="col-md-6">
                   <mat-form-field appearance="outline">
                     <mat-label for="standard">Class/Grade</mat-label>
-                    <mat-select id="standard" formControlName="standard">
+                    <mat-select id="standard" multiple formControlName="standard">
                       <mat-option>None</mat-option>
                       <mat-option *ngFor="let level of levels" [value]="level.groupId">
                         Grade - {{level.groupName}}
@@ -227,7 +227,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="form-row" *ngIf="authService?.userValue?.role === 1">
+              <div class="form-row" *ngIf="authService?.userValue?.role === 'Tutor'">
                 <div class="col-md-6">
                   <mat-form-field appearance="outline">
                     <mat-label for="agegroup">Age Group</mat-label>
@@ -249,7 +249,7 @@
             </span>
             </span>
 
-            <div class="form-row" *ngIf="authService?.userValue?.role === 1">
+            <div class="form-row" *ngIf="authService?.userValue?.role === 'Tutor'">
                 <div class="col-md-6">
                   <span [ngSwitch]="userForm.get('backgroundtype').value === '1'">
                     <span *ngSwitchCase="true">
@@ -275,7 +275,7 @@
                 </mat-radio-group>
               </div>
             </div>
-            <div class="form-row" *ngIf="authService?.userValue?.role === 1">
+            <div class="form-row" *ngIf="authService?.userValue?.role === 'Tutor'">
               <div class="col">
                 <mat-form-field appearance="outline">
                   <mat-label for="tutorexp">If you have tutored before, tell us about it here.</mat-label>
@@ -285,11 +285,10 @@
             </div>
           </div>
         </div>
-
-        <h4 class="address-div" *ngIf="authService?.userValue?.role === 1">Tutor Details</h4>
+        <h4 class="address-div" *ngIf="authService?.userValue?.role === 'Tutor'">Tutor Details</h4>
         <div class="row">
           <div class="col-12">
-            <div *ngIf="authService?.userValue?.role === 1">
+            <div *ngIf="authService?.userValue?.role === 'Tutor'">
               <div class="form-row">
                 <div class="col-md-6">
                   <mat-label>Preferred Teaching Style</mat-label>
@@ -358,7 +357,7 @@
                     <div class="pl-2 pr-2">
                       <input type="file" #file formControlName="proofDoc" placeholder="Choose file" name="formFile" (change)="uploadFile(file.files, 1)" style="display:none;">
                       <button type="button" class="btn btn-success d-none d-md-block" (click)="file.click()">Browse</button>
-                      <button mat-icon-button class="d-block d-sm-none" color="primary" (click)="file.click()"><mat-icon>attach_file</mat-icon></button>
+                      <button mat-icon-button class="d-block d-md-none" color="primary" (click)="file.click()"><mat-icon>attach_file</mat-icon></button>
                       <!-- <ngx-mat-file-input formControlName="proofDoc" id="proofDoc">
                       </ngx-mat-file-input> -->
                     </div>

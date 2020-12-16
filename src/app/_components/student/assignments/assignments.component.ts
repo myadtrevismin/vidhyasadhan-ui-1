@@ -4,6 +4,7 @@ import { AuthserviceService } from 'src/app/_services/authservice.service';
 import { FileuploaderService } from 'src/app/_services/fileuploader.service';
 import * as moment from 'moment';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { StudentService } from 'src/app/_services/student.service';
 
 @Component({
   selector: 'app-student-assignments',
@@ -30,6 +31,7 @@ export class StudentAssignmentsComponent implements OnInit {
   constructor(private courseService: CourseService,
               private authService: AuthserviceService,
               private fileUploader: FileuploaderService,
+              private studentService: StudentService,
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -39,7 +41,15 @@ export class StudentAssignmentsComponent implements OnInit {
 
   assignmentForm(){
     this.assignmentFormForm = this.fb.group({
+      id: [{
+        value: 0,
+        disabled: true
+      }],
       assignmentId : [{
+        value: '',
+        disabled: true
+      }],
+      courseId : [{
         value: '',
         disabled: true
       }],
@@ -100,9 +110,9 @@ export class StudentAssignmentsComponent implements OnInit {
       (error) => this.error = error);
   }
 
-  downloadFile(data) {
-    const blob = new Blob([data]);
-    const url = window.URL.createObjectURL(blob);
+  downloadFile() {
+   // const blob = new Blob([data]);
+   // const url = window.URL.createObjectURL(blob);
     window.open(this.f.assignmentFile.value);
   }
 
@@ -116,8 +126,10 @@ export class StudentAssignmentsComponent implements OnInit {
   viewDetails(assignment){
     this.selectdetail = !this.selectdetail;
     this.assignmentFormForm.patchValue({
+      id: assignment.id,
       assignmentId : assignment.assignmentId,
       dueDate: assignment.assignment.dueDate,
+      courseId: assignment.courseId,
       submissionDate : new Date(),
       assignmentFile : assignment.assignment.assignmentFile,
       userId : this.authService.userValue.id,
@@ -145,13 +157,15 @@ export class StudentAssignmentsComponent implements OnInit {
 
   update(filePath){
     const assignmentToUpdate = {
+      id: this.f.id.value,
       assignmentId: this.f.assignmentId.value,
       status: 1,
       submissionDate: new Date(),
       submissionFile: filePath,
-      userId: this.f.userId.value,
+      studentId: this.f.userId.value,
+      courseId: this.f.courseId.value
     };
-    this.courseService.updateStudentAssignments(assignmentToUpdate).subscribe(x => {if (x >= 0){
+    this.courseService.updateStudentAssignments(assignmentToUpdate).subscribe(x => {if (x.id > 0){
       this.isSuccess = true;
     }}, (error) => this.isSuccess = false);
   }

@@ -32,12 +32,13 @@ export class MapcomponentComponent implements OnInit {
       center: [this.lng, this.lat],
       accessToken: environment.mapbox_accessToken,
   });
+
+    console.log(this.markersdata);
   // Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
-
     this.markersdata.forEach(x => {
-      if (x.course?.langitude?.length > 0 && x.course?.latitude?.length > 0 ){
-        const marker = new mapboxgl.Marker().setLngLat([Number(x.course?.langitude), Number(x.course?.latitude)]).addTo(this.map);
+      if (x.event?.langitude > 0 && x.event?.latitude > 0 ){
+        const marker = new mapboxgl.Marker().setLngLat([Number(x.event?.langitude), Number(x.event?.latitude)]).addTo(this.map);
       }
     });
   }

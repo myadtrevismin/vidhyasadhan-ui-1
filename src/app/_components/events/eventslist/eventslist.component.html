@@ -1,7 +1,7 @@
 <ng-container *ngIf="!selectedDemo">
   <mat-tab-group mat-align-tabs="center" [backgroundColor]="'primary'">
     <mat-tab label="Demos">
-      <div class="card">
+      <div class="card min-card">
         <div class="card-header">
           <div class="demo-container">
             <div>
@@ -49,9 +49,14 @@
                     <p class="card-sub-title subtitle">Time: {{demo.startTime}} - {{demo.endTime}}</p>
                     <div class="card-text perfomed">
                       <div class="d-flex">
-                        <span class="list-inline">
-                          <span class="list-inline-item" *ngFor="let user of demo.enrollments">
-                            <img [src]="user.student?.profilePic" class="profimg">
+                        <span class="list-inline" *ngIf="authService.userValue.role === 'Tutor'">
+                          <span  class="list-inline-item" *ngFor="let user of demo.enrollments">
+                            <img [src]="user.account?.accountDetails[0]?.profilePic" class="profimg">
+                          </span>
+                        </span>
+                        <span class="list-inline" *ngIf="authService.userValue.role === 'Student'">
+                          <span  class="list-inline-item">
+                            <img [src]="demo.owner?.accountDetails[0]?.profilePic" class="profimg">
                           </span>
                         </span>
                         <span class="ml-auto">
@@ -72,7 +77,7 @@
 
     </mat-tab>
     <mat-tab label="Tutions">
-      <div class="card">
+      <div class="card min-card">
         <div class="card-header">
           <div class="demo-container">
             <div>
@@ -146,6 +151,6 @@
   </mat-tab-group>
 </ng-container>
 
-<ng-container *ngIf="selectedDemo">  
+<ng-container *ngIf="selectedDemo">
     <app-demodetail [course]="selectedDemo" (listView)="accessreturnValue($event)"></app-demodetail>
 </ng-container>

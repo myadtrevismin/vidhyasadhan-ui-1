@@ -12,15 +12,15 @@
   <ul class="list-group">
       <li class="list-group-item">
           Tutor:
-          <span>{{data.tutorinfo.Name | uppercase}}</span>
+          <span>{{data.tutorinfo.name | uppercase}}</span>
       </li>
     <li  class="list-group-item">
       <mat-form-field class="w-100">
           <mat-label>Select a Session</mat-label>
           <mat-select id="national" formControlName="demo">
             <mat-option>None</mat-option>
-            <mat-option *ngFor="let assignment of data.courses" [value]="assignment?.course">
-              {{assignment?.course?.title}} - {{assignment.course.startDate | date:'mediumDate'}} - {{assignment.course.startTime}} : {{assignment.course.endTime}}
+            <mat-option *ngFor="let assignment of data.courses" [value]="assignment">
+              {{assignment.title}} - {{assignment.startDate | date:'mediumDate'}} - {{assignment.startTime}} : {{assignment.endTime}}
             </mat-option>
           </mat-select>
           <!-- <input matInput [matDatepicker]="picker" formControlName="date" name="date"  placeholder="Preferred Date">

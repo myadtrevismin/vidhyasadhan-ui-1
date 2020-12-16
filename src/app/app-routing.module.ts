@@ -42,6 +42,9 @@ import { PromoterregisterComponent } from './_components/promoter/promoterregist
 import { PromoterlayoutComponent } from './_layouts/promoterlayout/promoterlayout.component';
 import { PromoterloginComponent } from './_components/promoter/promoterlogin/promoterlogin.component';
 import { StudentpaymentsComponent } from './_components/student/studentpayments/studentpayments.component';
+import { ForgotpasswordComponent } from './_components/login/forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './_components/login/resetpassword/resetpassword.component';
+import { AppnotificationsComponent } from './_components/appnotifications/appnotifications.component';
 
 const routes: Routes = [
   { path: 'vs', component: MainlayoutComponent, canActivate: [AuthGuard],
@@ -67,6 +70,7 @@ const routes: Routes = [
   { path: 'student/assignments', component: StudymaterialComponent},
   { path: 'progress', component: ReportsComponent},
   { path: 'student/payments', component: StudentpaymentsComponent},
+  { path: 'appnotify', component: AppnotificationsComponent},
   ] },
   {
     path: '', component: SitelayoutComponent,
@@ -101,8 +105,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register/:id', component: RegisterComponent},
   { path: 'authenticate', component: OtpComponent},
+  { path: 'account/forgot-password', component: ForgotpasswordComponent},
+  { path: 'account/reset-password', component: ResetpasswordComponent},
   { path: 'welcome', component: ActivatescreenComponent},
-  { path: 'verifyemail/:userid/:token', component: ConfirmationComponent},
+  { path: 'verify-email/:token', component: ConfirmationComponent},
   { path: '**', redirectTo: '' }
 ];
 

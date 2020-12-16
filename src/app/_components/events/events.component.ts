@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertService } from 'src/app/_services/alert.service';
 import { AuthserviceService } from 'src/app/_services/authservice.service';
 import { DemoService } from 'src/app/_services/demo.service';
 
@@ -10,7 +11,7 @@ import { DemoService } from 'src/app/_services/demo.service';
 export class EventsComponent implements OnInit {
 
   constructor(private authService: AuthserviceService,
-              private demoService: DemoService, ) { }
+              private demoService: DemoService, public alertService: AlertService) { }
 
   create = false;
   tutions;
@@ -27,10 +28,13 @@ export class EventsComponent implements OnInit {
     this.demoService.getAllDemosByUser(this.authService.userValue.id).subscribe(
       x => {
         this.events = x;
+        this.isLoading = false;
         this.tutions = x.filter(y => !y.isDemo);
         this.demos = x.filter(y => y.isDemo);
+      }, (error) => {
+        this.alertService.error('Error Loading Events');
         this.isLoading = false;
-      }, (error) => console.log(error)
+      }
     );
   }
 

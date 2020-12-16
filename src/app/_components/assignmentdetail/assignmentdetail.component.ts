@@ -17,6 +17,9 @@ import { CourseService } from 'src/app/_services/course.service';
 import { FileuploaderService } from 'src/app/_services/fileuploader.service';
 import { AuthserviceService } from 'src/app/_services/authservice.service';
 import { Demo } from 'src/app/_models/demo';
+import { StaticdataService } from 'src/app/_services/staticdata.service';
+import { StaticData } from 'src/app/_models/static';
+import { AlertService } from 'src/app/_services/alert.service';
 
 @Component({
   selector: 'app-assignmentdetail',
@@ -28,7 +31,9 @@ export class AssignmentdetailComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private courseService: CourseService,
               private authService: AuthserviceService,
-              private fileUploader: FileuploaderService) {}
+              private fileUploader: FileuploaderService,
+              private staticdataService: StaticdataService,
+              public alertService: AlertService) {}
 
   public assignmentForm: FormGroup;
   public submitted = false;
@@ -36,6 +41,9 @@ export class AssignmentdetailComponent implements OnInit {
   files: any[] = [];
   imagepath;
   uploadedFile;
+  staticData: StaticData;
+  levels;
+  subjects;
 
   @Input()
   course: Demo;
@@ -85,6 +93,13 @@ export class AssignmentdetailComponent implements OnInit {
       instructions: [''],
       assignmentFile: ['', Validators.required],
     });
+
+    this.staticdataService.getStaticDataSets()
+      .subscribe(x => {
+        this.staticData = x;
+        this.levels = this.staticData.groups;
+        this.subjects = x.subjects.filter((thing, i, arr) => arr.findIndex(t => t.name === thing.name) === i);
+      });
   }
 
   get f() {
@@ -121,13 +136,15 @@ export class AssignmentdetailComponent implements OnInit {
       this.uploadFile(this.files).then(event => {
         assignment.assignmentFile = event.filepath;
         this.courseService.createAssignment(assignment).subscribe(x => {
-          if (x >= 0){
+          if (x.assignmentId >= 0){
             this.success = 'Created Assignment Succesfully';
             this.assignmentCancelled();
           }
           else{
             this.success = 'Unable to Create Assignment at this time';
           }
+        }, (error) => {
+          this.alertService.error('Unable to Create Assignment at this time');
         });
     });
     }

@@ -17,8 +17,10 @@ export class DemolistComponent implements OnInit {
   selectedAction ;
   isOnline = false;
   demos: Demo[] = [];
-  demoRequests: DemoRequest[] = [];
+  requests: DemoRequest[] = [];
+  filteredRequests: DemoRequest[] = [];
   loadDemo = false;
+  checked = false;
   actions = [
     {id: 1, action : 'Accept', icon: 'check_circle', color: 'primary', title: 'List View'},
     {id: 2, action : 'Reject', icon: 'cancel', color: 'warn', title: 'List View'},
@@ -47,8 +49,9 @@ export class DemolistComponent implements OnInit {
     // this.demoService.getAllDemosByUser(this.authService.userValue.id)
     // .subscribe(x => this.demos = x, (error) => console.log(error));
 
-    this.demoService.getDemoRequests({tutorId: this.authService.userValue.id}).subscribe(
-      x => { this.demoRequests = x;
+    this.demoService.getDemoRequests(this.authService.userValue.id).subscribe(
+      x => { this.requests = x;
+             this.filteredRequests = x;
              this.loadDemo = true;
       }, (error) => console.log(error)
     );
@@ -62,17 +65,21 @@ export class DemolistComponent implements OnInit {
   }
 
   changeSelected(e, action, enrollment){
+    console.log(enrollment);
     const enrol: Enrollment = {
-    courseID: enrollment.course.courseId,
-    studentID: enrollment.student.id,
+    eventId: enrollment.event.courseId,
+    studentID: enrollment.account.id,
+    enrollmentDate: new Date(),
+    updateDate: new Date(),
+    requestId: enrollment.requestId
     };
     this.updateEnrollment(enrol, action.id);
   }
 
   updateEnrollment(enrollment: Enrollment, status){
     enrollment.status = status;
-    this.studentService.updateEnrollment(enrollment).subscribe(x => {
-  if (x >= 0){
+    this.studentService.saveEnrollment(enrollment).subscribe(x => {
+  if (x?.id > 0){
     this.openSnackBar('Notified Student', null);
   }
   else{
@@ -88,6 +95,16 @@ export class DemolistComponent implements OnInit {
       duration: 5 * 1000,
       data: { message: alert }
     });
+  }
+
+  filterRequests(event) {
+    this.loadDemo = true;
+    if (!this.checked){
+     this.filteredRequests = this.requests.filter(x => x.event.eventType === 0);
+   }
+   else{
+    this.filteredRequests = this.requests;
+   }
   }
   // getAdress(day: Demo){
   //   const address = day.enrollments[0].student.addresses[0];

@@ -23,18 +23,39 @@ import {
   StaticData
 } from 'src/app/_models/static';
 import {
-  WeekDay, formatDate
+  WeekDay,
+  formatDate
 } from '@angular/common';
-import { Profile } from 'src/app/_models/profile';
-import { HttpEventType } from '@angular/common/http';
-import { FileuploaderService } from 'src/app/_services/fileuploader.service';
-import { read } from 'fs';
-import { EventEmitter } from 'protractor';
-import { AuthserviceService } from 'src/app/_services/authservice.service';
-import { format } from 'date-fns/fp';
-import { MatDialog } from '@angular/material/dialog';
-import { ProfilemodelComponent } from '../profilemodel/profilemodel.component';
-import { AlertService } from 'src/app/_services/alert.service';
+import {
+  Profile
+} from 'src/app/_models/profile';
+import {
+  HttpEventType
+} from '@angular/common/http';
+import {
+  FileuploaderService
+} from 'src/app/_services/fileuploader.service';
+import {
+  read
+} from 'fs';
+import {
+  EventEmitter
+} from 'protractor';
+import {
+  AuthserviceService
+} from 'src/app/_services/authservice.service';
+import {
+  format
+} from 'date-fns/fp';
+import {
+  MatDialog
+} from '@angular/material/dialog';
+import {
+  ProfilemodelComponent
+} from '../profilemodel/profilemodel.component';
+import {
+  AlertService
+} from 'src/app/_services/alert.service';
 
 @Component({
   selector: 'app-profile',
@@ -45,7 +66,7 @@ export class ProfileComponent implements OnInit {
 
   userForm: FormGroup;
   user: User;
-  profile: Profile;
+  profile: User;
   staticData: StaticData;
   public submitted = false;
   proof;
@@ -55,62 +76,164 @@ export class ProfileComponent implements OnInit {
   levels;
   subjects;
 
-  days = [
-    {day: 'Monday', selected: false },
-    {day: 'Tuesday', selected: false },
-    {day: 'Wednesday', selected: false },
-    {day: 'Thursday', selected: false },
-    {day: 'Friday', selected: false },
-    {day: 'Saturday', selected: false },
-    {day: 'Sunday', selected: false }
+  days = [{
+      day: 'Monday',
+      selected: false
+    },
+    {
+      day: 'Tuesday',
+      selected: false
+    },
+    {
+      day: 'Wednesday',
+      selected: false
+    },
+    {
+      day: 'Thursday',
+      selected: false
+    },
+    {
+      day: 'Friday',
+      selected: false
+    },
+    {
+      day: 'Saturday',
+      selected: false
+    },
+    {
+      day: 'Sunday',
+      selected: false
+    }
   ];
   allChecked = false;
 
-  qualifications = [
-    {id: 1, value: 'No High School' },
-    {id: 2, value: 'Some High School' },
-    {id: 3, value: 'High School Diploma or GED' },
-    {id: 4, value: 'Associate Degree' },
-    {id: 5, value: 'Bachelors' },
-    {id: 6, value: 'Masters' },
-    {id: 7, value: 'Post Grad' },
-    {id: 8, value: 'Doctorate' },
-    {id: 9, value: 'Professional Degree' },
-    {id: 9, value: 'Professional Certificate' },
+  qualifications = [{
+      id: 1,
+      value: 'No High School'
+    },
+    {
+      id: 2,
+      value: 'Some High School'
+    },
+    {
+      id: 3,
+      value: 'High School Diploma or GED'
+    },
+    {
+      id: 4,
+      value: 'Associate Degree'
+    },
+    {
+      id: 5,
+      value: 'Bachelors'
+    },
+    {
+      id: 6,
+      value: 'Masters'
+    },
+    {
+      id: 7,
+      value: 'Post Grad'
+    },
+    {
+      id: 8,
+      value: 'Doctorate'
+    },
+    {
+      id: 9,
+      value: 'Professional Degree'
+    },
+    {
+      id: 9,
+      value: 'Professional Certificate'
+    },
   ];
 
-  nacategories = [
-    {id: 0, value: 'Music', subcategories: [
-      {id: 0, value: 'Classical Music' },
-      {id: 1, value: 'Tabla' },
-      {id: 2, value: 'Piano' },
-    ]},
-    {id: 1, value: 'Cricket', subcategories: [
-      {id: 0, value: 'Batsmen' },
-      {id: 1, value: 'Bowler' },
-      {id: 2, value: 'Wicket keeper' },
-    ]},
-    {id: 2, value: 'Tennis', subcategories: [
-      {id: 0, value: 'Batsmen' },
-      {id: 1, value: 'Bowler' },
-      {id: 2, value: 'Wicket keeper' },
-    ] },
+  nacategories = [{
+      id: 0,
+      value: 'Music',
+      subcategories: [{
+          id: 0,
+          value: 'Classical Music'
+        },
+        {
+          id: 1,
+          value: 'Tabla'
+        },
+        {
+          id: 2,
+          value: 'Piano'
+        },
+      ]
+    },
+    {
+      id: 1,
+      value: 'Cricket',
+      subcategories: [{
+          id: 0,
+          value: 'Batsmen'
+        },
+        {
+          id: 1,
+          value: 'Bowler'
+        },
+        {
+          id: 2,
+          value: 'Wicket keeper'
+        },
+      ]
+    },
+    {
+      id: 2,
+      value: 'Tennis',
+      subcategories: [{
+          id: 0,
+          value: 'Batsmen'
+        },
+        {
+          id: 1,
+          value: 'Bowler'
+        },
+        {
+          id: 2,
+          value: 'Wicket keeper'
+        },
+      ]
+    },
   ];
 
-  nasubcategories = [
-    {id: 1, value: 'Music' },
-    {id: 2, value: 'Cricket' },
-    {id: 3, value: 'Tennis' },
+  nasubcategories = [{
+      id: 1,
+      value: 'Music'
+    },
+    {
+      id: 2,
+      value: 'Cricket'
+    },
+    {
+      id: 3,
+      value: 'Tennis'
+    },
   ];
 
-  agegroups = [
-    {id: 1, value: '5 to 10' },
-    {id: 2, value: '11 to 19' },
-    {id: 3, value: '20 to 35' }
+  agegroups = [{
+      id: 1,
+      value: '5 to 10'
+    },
+    {
+      id: 2,
+      value: '11 to 19'
+    },
+    {
+      id: 3,
+      value: '20 to 35'
+    }
   ];
 
-  @ViewChild('fileInput', {static: false}) fileInput: ElementRef;
-  files  = [];
+  @ViewChild('fileInput', {
+    static: false
+  }) fileInput: ElementRef;
+  files = [];
 
 
   constructor(private formBuilder: FormBuilder,
@@ -183,28 +306,27 @@ export class ProfileComponent implements OnInit {
     });
     this.getUser();
     this.staticdataService.getStaticDataSets()
-    .subscribe(x => {this.staticData = x;
-                     console.log(x);
-                     this.levels = this.staticData.groups;
-                     this.subjects = x.subjects.filter((thing, i, arr) => arr.findIndex(t => t.name === thing.name) === i);
-                    });
+      .subscribe(x => {
+        this.staticData = x;
+        this.levels = this.staticData.groups;
+        this.subjects = x.subjects.filter((thing, i, arr) => arr.findIndex(t => t.name === thing.name) === i);
+      });
   }
 
   getUser() {
     const currentUser: User = this.authService.userValue;
-    this.userService.get(currentUser.id).subscribe(
-      x => {
-        this.user = x;
-        console.log(this.user);
-        this.updateFormValus(x);
-      }
-    );
+    this.userService.get(currentUser.id).subscribe(data => {
+      this.user = data;
+      this.updateFormValus(data);
+    });
     return currentUser;
   }
 
-  get f() { return this.userForm.controls; }
+  get f() {
+    return this.userForm.controls;
+  }
 
- fileread(callback) {
+  fileread(callback) {
     const file = this.f.proofDoc.value;
     const reader = new FileReader();
 
@@ -218,173 +340,160 @@ export class ProfileComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.userForm.valid) {
-      const userValues: Profile = {
+      const userValues = {
+        id: this.profile.id,
         firstName: this.f.firstname.value,
         lastName: this.f.lastname.value,
         email: this.f.profilemail.value,
         phone: this.f.profilephone.value,
-        gender: this.f.gender.value,
-        birthdate: this.f.birthdate.value,
         profilePic: this.f.profilePic.value,
-        ageGroup: this.f.agegroup.value,
-        certification: this.f.certification.value,
-        naCategory: this.f.nacategory.value,
-        naSubCategory: this.f.nasubcategory.value,
         address: {
-          addressType: 1,
-          addressId: this.profile?.address.addressId,
+          addressType: '1',
+          addressId: this.profile.address ? this.profile.address.addressId : 0,
           address1: this.f.streetAddress1.value,
           address2: this.f.streetAddress2.value,
           city: this.f.inputCity.value,
           pinCode: this.f.inputPin.value,
           stateCd: this.f.stateCode.value,
-          countryCd: this.f.national.value
+          id: this.profile.id,
+          countryCd: 'IND',
         },
-        instructor: {
-          userId: this.profile?.instructor?.userId,
-          board: this.f.board.value,
-          academyTypeId: this.f.backgroundtype.value,
-          highestEducation: this.f.qualification.value,
-          subjects: this.f.subject.value,
-          level: this.f.standard.value,
-          isTutorBefore: this.f.isteacher.value,
+        accountDetails: {
+          id: this.profile.accountDetails ? this.profile.id : 0,
+          profilePic: this.f.profilePic.value === `assets/profile-pic.svg` ? null : this.f.profilePic.value,
+          sex: this.f.gender.value,
+          dateOfBirth: this.f.birthdate.value,
+          enrollmentDate: new Date(),
+          naCategory: this.f.nacategory.value,
+          naSubCategory: this.f.nasubcategory.value,
+          ageGroup: this.f.agegroup.value,
+          certification: this.f.certification.value,
+          board: this.f.board.value.join(','),
+          academyTypeId: (this.f.backgroundtype.value === undefined || this.f.backgroundtype.value === null)
+                                                      ? 0 : Number.parseInt(this.f.backgroundtype.value, 10),
+          subjects: this.f.subject.value.join(','),
+          level: this.f.standard.value.join(','),
+          isTutorBefore: this.f.isteacher.value === undefined ? false : this.f.isteacher.value,
           professionalDescription: this.f.tutorexp.value,
+          highestEducation: this.f.qualification.value,
           preference: this.f.tutorpreference.value,
           availableDays: this.days.filter(x => x.selected === true).map(x => x.day).join(','),
-          preferredDistance: this.f.distance.value,
+          preferredDistance: this.f.distance.value === undefined || this.f.distance.value === null
+                                                  ? 0 : Number.parseInt(this.f.distance.value, 10),
           preferredTimeSlot: this.f.timing.value,
-          hourlyRate: this.f.rate.value,
+          hourlyRate: this.f.rate.value === undefined || this.f.rate.value === null ? 0 :  Number.parseInt(this.f.rate.value, 10),
           currency: this.f.currency.value,
           idType: this.f.proof.value,
           idDoc: this.f.proofDoc.value,
           demoLink: this.f.demo.value,
           intersets: this.f.interests.value,
-          medium: this.f.medium.value,
+          medium: this.f.medium.value.join(',')
         },
-        student: {
-          userId:  this.authService.userValue.id,
-          board:  this.f.board.value,
-          academyTypeId:  this.f.backgroundtype.value,
-          subjects:  this.f.subject.value,
-          level:  this.f.standard.value,
-          intersets:  this.f.interests.value,
-          medium: this.f.medium.value,
-        }
       };
-
-      if (this.authService.userValue.role === 0){
-        userValues.instructor = null;
-      }
-      else if (this.authService.userValue.role === 1){
-        userValues.student = null;
-      }
       this.userService.updateProfileData(userValues)
-      .subscribe(x => {if ( x === true){
-        this.alertService.success('Profile Updated Succesfully');
-      }else{
-        this.alertService.error('Profile is not Updated');
-      }},
-      (error) => this.alertService.error(error));
+        .subscribe((x: User) => {
+            if (x !== (null || undefined)) {
+              this.alertService.success('Profile Updated Succesfully');
+            } else {
+              this.alertService.error('Profile is not Updated');
+            }
+          },
+          (error) => this.alertService.error(error));
     }
   }
 
-getByteArray(file){
+  getByteArray(file) {
 
- }
+  }
 
-updateFormValus(user: User){
-    this.userService.getProfileData(user.id).subscribe(x => {
-      this.profile = x;
-      const available = this.profile.instructor?.availableDays?.split(',');
-      this.days.forEach(a => {
-        if (available?.some(y => y === a.day)){
-          a.selected = true;
-        }
-      });
-      this.userForm.patchValue({
-        firstname: x?.firstName,
-        lastname: x?.lastName,
-        profilemail: x?.email,
-        profilephone: x?.phone,
-        password: null,
-        gender: x?.gender,
-        birthdate: formatDate(x?.birthdate, 'yyyy-MM-dd', 'en-us'),
-        profilePic: x?.profilePic === null ? [`assets/profile-pic.svg`] : x?.profilePic,
-        streetAddress1: x?.address.address1,
-        streetAddress2: x?.address.address2,
-        inputCity: x?.address.city,
-        stateCode: x?.address.stateCd,
-        inputPin: x?.address.pinCode,
-        national: x?.address.countryCd,
-        backgroundtype: x?.instructor?.academyTypeId?.toString() || x?.student?.academyTypeId?.toString(),
-        medium: x?.instructor?.medium || x?.student?.medium,
-        subject: x?.instructor?.subjects || x?.student?.subjects,
-        board: x?.instructor?.board || x?.student?.board,
-        standard: x?.instructor?.level || x?.student?.level,
-        qualification: x?.instructor?.highestEducation,
-        isteacher: (String)(x?.instructor?.isTutorBefore),
-        tutorexp: x?.instructor?.professionalDescription,
-        tutorpreference: x?.instructor?.preference,
-        dayselection: x?.instructor?.availableDays,
-        distance: x?.instructor?.preferredDistance,
-        timing: x?.instructor?.preferredTimeSlot,
-        rate: x?.instructor?.hourlyRate,
-        currency: x?.instructor?.currency,
-        proof: x?.instructor?.idType,
-        demo: x?.instructor?.demoLink,
-        interests: x?.instructor?.intersets || x?.student?.intersets,
-        agegroup: x?.ageGroup,
-        certification: x?.certification,
-        nacategory: x?.naCategory,
-        nasubcategory: x?.naSubCategory,
-      });
+  updateFormValus(user: User) {
+    this.profile = user;
+    const available = user?.accountDetails?.availableDays?.split(',');
+    this.days.forEach(a => {
+      if (available ?.some(y => y === a.day)) {
+        a.selected = true;
+      }
+    });
+    this.userForm.patchValue({
+      firstname: user?.firstName,
+      lastname: user?.lastName,
+      profilemail: user?.email,
+      profilephone: user?.phone,
+      password: null,
+      gender: user?.accountDetails?.sex,
+      birthdate: user?.accountDetails?.dateOfBirth ? formatDate(user?.accountDetails?.dateOfBirth, 'yyyy-MM-dd', 'en-us') : null,
+      profilePic: user?.accountDetails ?.profilePic === null ? `assets/profile-pic.svg` : user?.accountDetails?.profilePic,
+      streetAddress1: user?.address?.address1,
+      streetAddress2: user?.address?.address2,
+      inputCity: user?.address?.city,
+      stateCode: user?.address?.stateCd,
+      inputPin: user?.address?.pinCode,
+      national: user?.address?.countryCd,
+      backgroundtype: user?.accountDetails?.academyTypeId.toString(),
+      medium: user?.accountDetails?.medium.split(','),
+      subject: user?.accountDetails?.subjects.split(','),
+      board: user?.accountDetails?.board.split(','),
+      standard: user?.accountDetails?.level.split(',').map(x => Number.parseInt(x, 10)),
+      qualification: user?.accountDetails?.highestEducation,
+      isteacher: (user?.accountDetails?.isTutorBefore) ? 'true' : 'false',
+      tutorexp: user?.accountDetails?.professionalDescription,
+      tutorpreference: user?.accountDetails?.preference,
+      dayselection: user?.accountDetails?.availableDays,
+      distance: user?.accountDetails?.preferredDistance,
+      timing: user?.accountDetails?.preferredTimeSlot,
+      rate: user?.accountDetails?.hourlyRate,
+      currency: user?.accountDetails?.currency,
+      proof: user?.accountDetails?.idType,
+      demo: user?.accountDetails?.demoLink,
+      interests: user?.accountDetails?.intersets,
+      agegroup: user?.accountDetails?.ageGroup,
+      certification: user?.accountDetails?.certification,
+      nacategory: user?.accountDetails?.naCategory,
+      nasubcategory: user?.accountDetails?.naSubCategory,
     });
   }
 
-callUploadService(file){
-  }
+  callUploadService(file) {}
 
   uploadFile(files, type) {
     if (files.length === 0) {
       return;
     }
 
-    const fileToUpload =  files[0] as File;
+    const fileToUpload = files[0] as File;
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
 
     const filepath = this.fileUploader.uploadFile(formData)
       .subscribe(event => {
-        if (type === 0){
+        if (type === 0) {
           this.uploadedFile = event.filepath;
           this.userForm.get('profilePic').setValue(this.uploadedFile);
-        }
-        else{
+        } else {
           this.proofdocument = event.filepath;
           this.userForm.get('proofDoc').setValue(this.proofdocument);
         }
       });
   }
 
-onClick(){
+  onClick() {
     const fileInput = this.fileInput.nativeElement;
-    fileInput.onchange = () => {
-    };
+    fileInput.onchange = () => {};
     fileInput.click();
   }
 
-changeDays(checker, day){
+  changeDays(checker, day) {
     day.selected = checker;
     this.allChecked = this.days.filter(t => t.selected).length > 0 ? false : this.allChecked;
   }
 
-changeAll(completed: boolean){
+  changeAll(completed: boolean) {
     this.allChecked = completed;
     if (this.days == null) {
       return;
     }
     this.days.forEach(t => {
-      if (completed === true){
+      if (completed === true) {
         t.selected = true;
       }
     });
@@ -396,8 +505,7 @@ changeAll(completed: boolean){
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== null && result !== undefined){
-        console.log(result.image);
+      if (result !== null && result !== undefined) {
         this.userForm.get('profilePic').setValue(result.image);
         this.uploadFile(result.file, 0);
       }
@@ -405,10 +513,10 @@ changeAll(completed: boolean){
   }
 
   getSubCategory() {
-    return this.nacategories.filter(x => x.value === this.userForm.get('nacategory').value)[0]?.subcategories ;
+    return this.nacategories.filter(x => x.value === this.userForm.get('nacategory').value)[0] ?.subcategories ;
   }
 
-  reset(){
+  reset() {
     this.getUser();
   }
 }

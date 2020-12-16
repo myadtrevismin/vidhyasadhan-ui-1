@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthserviceService
   ) {
+    console.log(this.authService.userValue);
     if (this.authService.userValue) {
       this.router.navigate(['/vs']);
     }
@@ -81,11 +82,11 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authService.login(this.f.username.value, this.f.password.value, this.isTutor ? 1 : 0)
+    this.authService.login(this.f.username.value, this.f.password.value, this.isTutor ? 1 : 2)
       .pipe(first())
       .subscribe({
         next: () => {
-          this.router.navigate(['authenticate'], {queryParams: { returnUrl : this.returnUrl, email: this.f.username.value}});
+          this.router.navigate([this.returnUrl]);
         },
         error: error => {
           this.error = 'Please Check your Password or Email to Confirm';

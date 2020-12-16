@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1366" height="768" viewBox="0 0 1366 768">
+    <defs>
+        <linearGradient id="r8laceyomb" x1="50%" x2="50%" y1="13.322%" y2="100%">
+            <stop offset="0%" stop-color="#F0F9FF"/>
+            <stop offset="100%" stop-color="#BCDAFC"/>
+        </linearGradient>
+        <path id="xmylqrijza" d="M0 0H1366V768H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <use fill="url(#r8laceyomb)" xlink:href="#xmylqrijza"/>
+    </g>
+</svg>

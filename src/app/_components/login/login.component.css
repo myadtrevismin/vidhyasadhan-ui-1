@@ -94,7 +94,7 @@ mat-form-field>.mat-form-field-wrapper {
 .log-header {
   border: 0;
   background-color: #ffffff;
-  background-image: url("/vidhyasadhan-ui/assets/registration/combined-shape.svg");
+  background-image: url("/assets/registration/combined-shape.svg");
   background-repeat: no-repeat;
   background-position: top right;
 }
@@ -117,7 +117,7 @@ mat-form-field>.mat-form-field-wrapper {
   position: relative;
   right: -62px;
   z-index: 5;
-  top: 20px;
+  top: 5px;
 }
 
 .promoter-log{
@@ -167,7 +167,7 @@ mat-form-field>.mat-form-field-wrapper {
     position: relative;
     right: -50px;
     z-index: 3;
-    top: 30px;
+    top: 15px;
   }
 
   .log-form-mr {

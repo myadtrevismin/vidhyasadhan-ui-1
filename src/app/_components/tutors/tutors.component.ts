@@ -21,6 +21,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertboxComponent } from '../alertbox/alertbox.component';
 import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { StudentService } from 'src/app/_services/student.service';
+import { AlertService } from 'src/app/_services/alert.service';
 
 @Component({
   selector: 'app-tutors',
@@ -36,30 +38,55 @@ export class TutorsComponent implements OnInit {
   query1;
   query2;
   query3;
+  demos;
+  disableDemo = false;
+  demoDisabled = false;
+  classDisabled = false;
 
   constructor(private userservice: UserService,
               public dialog: MatDialog,
               private authService: AuthserviceService,
               private demoService: DemoService,
               private _snackBar: MatSnackBar,
-              private formBuilder: FormBuilder) {}
+              private formBuilder: FormBuilder,
+              private studentService: StudentService,
+              private alertService: AlertService) {}
 
   ngOnInit(): void {
     this.createForm();
 
-    this.userservice.getTutors().subscribe(
-      x => {
-        this.tutors = x;
-        this.sliceTutors(x);
-      },
-      (error) => console.log(error)
-    );
+    this.userservice.getUserByRole(1).subscribe(x => {
+      this.tutors = x;
+      this.sliceTutors(x);
+    },
+    (error) => this.alertService.error(error));
+
+    this.studentService.getEnrollmentsbyStudent(this.authService.userValue.id).subscribe(x => {
+      this.demos = x.filter(y => y.event.isDemo);
+    });
+
+    this.loadRequests();
 
     const weekarrays = moment.weekdays();
     weekarrays.join('-');
     this.weekArray.push('Monday to Thursday');
     this.weekArray.push('Friday');
     this.weekArray.push('Saturday, Sunday');
+  }
+
+  private loadRequests() {
+    this.studentService.getRequestsbyStudent(this.authService.userValue.id).subscribe(x => {
+      const today = new Date();
+      let demoCount = 0;
+      x.forEach(element => {
+        const requestDate = new Date(element.date);
+        if (element?.event?.isDemo === true && requestDate.getMonth() === today.getMonth() &&
+          requestDate.getFullYear() === today.getFullYear()) {
+          demoCount++;
+        }
+      });
+      this.disableDemo = demoCount > 2;
+    });
   }
 
   get f() { return this.searchForm.controls; }
@@ -82,12 +109,15 @@ export class TutorsComponent implements OnInit {
   }
 
   selectDemo(e, tutor, type) {
+    if ((type === true && this.demoDisabled) || (type === false && this.classDisabled)){
+      return;
+    }
     const tutordialog =   this.dialog.open(DemomodelComponent, {
       width: '350px',
       data: {
         tutorinfo: tutor,
         student:  this.authService.userValue,
-        courses: tutor.account.courseAssignments?.filter(x => x.course?.isDemo === type),
+        courses: tutor.events?.filter(x => x.isDemo === type),
         type
       }
     });
@@ -97,9 +127,9 @@ export class TutorsComponent implements OnInit {
           x => {
             this._snackBar.openFromComponent(AlertboxComponent, {
               duration: 5000,
-              data: { message: x > 0  ? 'Request Sent to Tutor' : 'Unable to Send Request'},
+              data: { message: x?.requestId > 0  ? 'Request Sent to Tutor' : 'Unable to Send Request'},
             });
-
+            this.loadRequests();
           });
         }
       });
@@ -121,15 +151,15 @@ export class TutorsComponent implements OnInit {
     if (this.f.location.value !== null &&  this.f.location.value !== undefined){
       const keys = 'address1,city,pincode';
       filteredItems = filteredItems.filter(item =>
-        item.location?.address1.toLowerCase().includes(this.f.location.value.toLowerCase())
-        || item.location?.city.toLowerCase().includes(this.f.location.value.toLowerCase())
-        || item.location?.pincode.toLowerCase().includes(this.f.location.value.toLowerCase()));
+        item.address?.address1.toLowerCase().includes(this.f.location.value.toLowerCase())
+        || item.address?.city.toLowerCase().includes(this.f.location.value.toLowerCase())
+        || item.address?.pincode.toLowerCase().includes(this.f.location.value.toLowerCase()));
     }
     if (this.f.subject.value !== null && this.f.subject.value !== undefined){
       const keys = 'subjects, level';
       filteredItems = filteredItems.filter(item =>
-        item.subjects?.toLowerCase().includes(this.f.subject.value.toLowerCase())
-        || item.level?.toLowerCase().includes(this.f.subject.value.toLowerCase()));
+        item.accountDetails.subjects.toLowerCase().includes(this.f.subject.value.toLowerCase())
+        || item.accountDetails.level.toLowerCase().includes(this.f.subject.value.toLowerCase()));
     }
     if (this.f.tutor.value !== null && this.f.tutor.value !== undefined){
       const keys = 'name';
@@ -141,12 +171,14 @@ export class TutorsComponent implements OnInit {
 
   getDisabled(tutor, item){
     if (item){
-      const demos = tutor.account.courseAssignments?.filter(x => x.course?.isDemo === true);
-      return !(demos?.length > 0);
+      const demos = tutor.events?.filter(x => x.isDemo === true);
+      this.demoDisabled = !(demos?.length > 0 && !this.disableDemo);
+      return this.demoDisabled;
     }
     else{
-      const classes = tutor.account.courseAssignments?.filter(x => x.course?.isDemo === false);
-      return !(classes?.length > 0);
+      const classes = tutor.events?.filter(x => x.isDemo === false);
+      this.classDisabled = !(classes?.length > 0);
+      return this.classDisabled;
     }
   }
 
