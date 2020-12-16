@@ -81,7 +81,7 @@ const routes: Routes = [
       { path: 'contact', component: SitecontactusComponent},
       { path: 'features', component: SitefeaturesComponent},
       { path: 'navbar', component: SitenavComponent},
-      { path: 'verify-email/:token', component: ConfirmationComponent},
+      { path: 'verify-email/:id', component: ConfirmationComponent},
     ]
   },
   {
