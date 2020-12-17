@@ -85,6 +85,13 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'accounts', component: SitelayoutComponent,
+    children: [
+      { path: '', component: SitehomeComponent, pathMatch: 'full'},
+      { path: 'verify-email/:id', component: ConfirmationComponent},
+    ]
+  },
+  {
     path: 'admin', component: AdminlayoutComponent,
     children: [
       { path: '', component: AdminComponent, pathMatch: 'full'},
